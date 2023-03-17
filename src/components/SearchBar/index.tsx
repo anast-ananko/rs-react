@@ -5,18 +5,24 @@ import './searchBar.scss';
 
 class SearchBar extends Component<ISearchBarState> {
   state = {
-    query: '',
+    query: localStorage.getItem('searchQuery') || '',
   };
 
   handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
     this.setState({
-      query: e.target.value,
+      query,
     });
+    localStorage.setItem('searchQuery', query);
+  };
+
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   render() {
     return (
-      <form className="search">
+      <form className="search" onSubmit={this.handleSubmit}>
         <div className="search__input">
           <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
           <input
