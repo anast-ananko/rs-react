@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
 const About: FunctionComponent = ({}) => {
-  return <></>;
+  return <>About</>;
 };
 
 export default About;
