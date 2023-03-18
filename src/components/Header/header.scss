@@ -1,8 +1,18 @@
 .header {
     background-color: aqua;
     height: 80px;
+}
+
+.header__container {
+    padding-top: 25px;
     display: flex;
     align-items: center;
+}
+
+.header__title {
+    margin-left: 70px;
+    font-size: 28px;
+    color: rgb(12, 122, 21);
 }
 
 .header__link {
@@ -10,7 +20,7 @@
     font-size: 22px;
 
     &:hover {
-      color: rgb(44, 71, 190); 
+      color: rgb(32, 126, 133); 
     }
 
     &:first-child {
@@ -19,5 +29,5 @@
 }
 
 .active {
-    color: rgb(44, 71, 190); 
+    color: rgb(32, 126, 133); 
 }
