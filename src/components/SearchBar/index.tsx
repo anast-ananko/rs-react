@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ISearchBarState } from '../../interfaces/searchBar';
+import { ISearchBarState } from '../../interfaces/searchBarState';
 
 import './searchBar.scss';
 

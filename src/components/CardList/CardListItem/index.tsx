@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ICardListItem } from '../../../interfaces/cardListItem';
+import { ICardListItemProps } from '../../../interfaces/cardListItemProps';
 
-class CardListItem extends Component<ICardListItem> {
+class CardListItem extends Component<ICardListItemProps> {
   render() {
     const { id, name, latinName, image } = this.props;
     return (
