@@ -8,15 +8,17 @@ class SearchBar extends Component<ISearchBarState> {
     query: localStorage.getItem('searchQuery') || '',
   };
 
-  handleQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    this.setState({
-      query,
-    });
-    localStorage.setItem('searchQuery', query);
+  componentWillUnmount = (): void => {
+    localStorage.setItem('searchQuery', this.state.query);
   };
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    this.setState({
+      query: e.target.value,
+    });
+  };
+
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
   };
 

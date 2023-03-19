@@ -8,7 +8,7 @@ class Header extends Component {
     activePage: window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1),
   };
 
-  handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     const element = e.target as HTMLElement;
     this.setState({
       activePage: element.getAttribute('data-name'),
