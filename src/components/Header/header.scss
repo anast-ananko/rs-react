@@ -1,0 +1,33 @@
+.header {
+    background-color: aqua;
+    height: 80px;
+}
+
+.header__container {
+    padding-top: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.header__title {
+    margin-left: 70px;
+    font-size: 28px;
+    color: rgb(12, 122, 21);
+}
+
+.header__link {
+    color: rgb(3, 11, 48);
+    font-size: 22px;
+
+    &:hover {
+      color: rgb(32, 126, 133); 
+    }
+
+    &:first-child {
+        margin: 0 20px;
+    }
+}
+
+.active {
+    color: rgb(32, 126, 133); 
+}
