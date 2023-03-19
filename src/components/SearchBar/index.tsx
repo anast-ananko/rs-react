@@ -22,7 +22,7 @@ class SearchBar extends Component<ISearchBarState> {
 
   render() {
     return (
-      <form className="search" onSubmit={this.handleSubmit}>
+      <form data-testid="form" className="search" onSubmit={this.handleSubmit}>
         <div className="search__input">
           <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
           <input
@@ -32,7 +32,7 @@ class SearchBar extends Component<ISearchBarState> {
             placeholder="Search..."
           />
         </div>
-        <button className="search__button" type="submit">
+        <button data-testid="search__button" className="search__button" type="submit">
           Search
         </button>
       </form>

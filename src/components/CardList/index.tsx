@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import CardListItem from './CardListItem';
-import flowers from '../../data/flowers.json';
+import { IFlower } from '../../interfaces/flower';
+import { IFlowers } from 'interfaces/flowers';
 
 import './cardList.scss';
 
-class CardList extends Component {
+class CardList extends Component<IFlowers> {
   render() {
+    const { flowers } = this.props;
+
     return (
       <div className="cards__list">
-        {flowers.map((flower) => {
+        {flowers.map((flower: IFlower) => {
           return (
             <CardListItem
               key={flower.id}
