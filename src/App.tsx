@@ -4,6 +4,7 @@ import {
   Route,
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
 } from 'react-router-dom';
 
 import './App.scss';
@@ -16,9 +17,10 @@ import NotFound from './components/NotFound';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route index={true} element={<Home />} />
+      <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="404" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="404" replace />} />
     </Route>
   )
 );
