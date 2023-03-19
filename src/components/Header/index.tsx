@@ -5,7 +5,7 @@ import './header.scss';
 
 class Header extends Component {
   state = {
-    activePage: window.location.pathname.slice(1),
+    activePage: window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1),
   };
 
   handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
