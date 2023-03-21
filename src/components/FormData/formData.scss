@@ -1,0 +1,53 @@
+.form-data {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.form-data__title {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.form__content {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 500px;
+    font-size: 20px;
+}
+
+.form__label {
+    margin-bottom: 30px;
+}
+
+.form__select,
+.form__date {
+    cursor: pointer;
+}
+
+.form__radio {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.form__checkbox {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.form__button {
+    width: 100px;
+    height: 40px;
+    margin: 30px auto 0;
+    cursor: pointer;
+    background-color: aqua;
+    border-radius: 5px;
+    border: none;
+    transition: 0.5s;
+
+    &:hover {
+        background-color: rgb(14, 100, 153);
+    }
+}

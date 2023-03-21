@@ -4,6 +4,8 @@ import Form from './Form';
 import FormCardsList from './FormCardsList';
 import { IFormDataState } from '../../interfaces/formDataState';
 
+import './formData.scss';
+
 class FormData extends Component<Record<string, never>, IFormDataState> {
   state = {
     cards: [],
