@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { headerTitle } from '../../helpers/headerTitle';
+
 import './header.scss';
 
 class Header extends Component {
@@ -31,13 +33,15 @@ class Header extends Component {
             >
               About
             </NavLink>
-            {this.state.activePage === 'home' ? (
-              <div className="header__title">Home page</div>
-            ) : this.state.activePage === 'about' ? (
-              <div className="header__title">About page</div>
-            ) : (
-              <div className="header__title">Not found page</div>
-            )}
+            <NavLink
+              data-name="form"
+              to="/form"
+              className="header__link"
+              onClick={this.handleClick}
+            >
+              Form
+            </NavLink>
+            <div className="header__title">{headerTitle(this.state.activePage)}</div>
           </div>
         </header>
       </>
