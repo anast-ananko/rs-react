@@ -10,10 +10,9 @@ class Header extends Component {
     activePage: window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1),
   };
 
-  handleClick = (e: React.MouseEvent<HTMLAnchorElement>): void => {
-    const element = e.target as HTMLElement;
+  handleClick = (): void => {
     this.setState({
-      activePage: element.getAttribute('data-name'),
+      activePage: window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1),
     });
   };
 
@@ -22,26 +21,16 @@ class Header extends Component {
       <>
         <header className="header">
           <div className="container header__container">
-            <NavLink data-name="home" to="/" className="header__link" onClick={this.handleClick}>
+            <NavLink to="/" className="header__link" onClick={this.handleClick}>
               Home
             </NavLink>
-            <NavLink
-              data-name="about"
-              to="/about"
-              className="header__link"
-              onClick={this.handleClick}
-            >
+            <NavLink to="/about" className="header__link" onClick={this.handleClick}>
               About
             </NavLink>
-            <NavLink
-              data-name="form"
-              to="/form"
-              className="header__link"
-              onClick={this.handleClick}
-            >
+            <NavLink to="/form" className="header__link" onClick={this.handleClick}>
               Form
             </NavLink>
-            <div className="header__title">{headerTitle(this.state.activePage)}</div>
+            <div className="header__title">{headerTitle()}</div>
           </div>
         </header>
       </>
