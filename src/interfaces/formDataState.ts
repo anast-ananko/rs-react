@@ -1,10 +1,10 @@
-interface ICard {
+export interface ICard {
   title: string;
-  description: string;
-  date: string;
-  selecte: string;
-  chechbox: boolean;
-  image: string;
+  date?: string;
+  color?: string;
+  size?: string;
+  checkbox?: boolean;
+  image?: string;
 }
 
 export interface IFormDataState {
