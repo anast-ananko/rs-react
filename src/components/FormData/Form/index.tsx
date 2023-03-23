@@ -164,19 +164,22 @@ class Form extends Component<IFormProps, IFormState> {
   };
 
   validateForm = () => {
-    if (
-      this.validateInput() &&
-      this.validateDate() &&
-      this.validateSelect() &&
-      this.validateRadio() &&
-      this.validateCheckbox() &&
-      this.validateFile()
-    ) {
-      this.setState({
-        formIsValid: true,
-      });
-      return true;
-    }
+    const validationResults = {
+      input: this.validateInput(),
+      date: this.validateDate(),
+      select: this.validateSelect(),
+      radio: this.validateRadio(),
+      checkbox: this.validateCheckbox(),
+      file: this.validateFile(),
+    };
+
+    const isFormValid = Object.values(validationResults).every((result) => result);
+
+    this.setState({
+      formIsValid: isFormValid,
+    });
+
+    return isFormValid;
   };
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -199,57 +202,16 @@ class Form extends Component<IFormProps, IFormState> {
       };
 
       this.props.addCard(newCard);
+      setTimeout(
+        () =>
+          this.setState({
+            formIsValid: false,
+          }),
+        5000
+      );
+      //this.clearFields();
     }
-    setTimeout(
-      () =>
-        this.setState({
-          formIsValid: false,
-        }),
-      5000
-    );
-    //this.clearFields();
   };
-
-  // handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   const { inputError, dateError, selectError, radioError, checkboxError, fileError } = this.state;
-  //   e.preventDefault();
-  //   await this.validateInput();
-  //   await this.validateDate();
-  //   await this.validateSelect();
-  //   await this.validateRadio();
-  //   await this.validateCheckbox();
-  //   await this.validateFile();
-  //   if (!inputError && !dateError && !selectError && !radioError && !checkboxError && !fileError) {
-  //     const newCard = {
-  //       title: this.inputRef.current!.value,
-  //       date: this.dateRef.current!.value,
-  //       color: this.selectRef.current!.value,
-  //       size: this.radioRef_1.current!.checked
-  //         ? this.radioRef_1.current!.value
-  //         : this.radioRef_2.current!.checked
-  //         ? this.radioRef_2.current!.value
-  //         : this.radioRef_3.current!.value,
-  //       checkbox:
-  //         (this.checkboxRef_1.current?.checked ? this.checkboxRef_1.current?.value : '') +
-  //         ' ' +
-  //         (this.checkboxRef_2.current?.checked ? this.checkboxRef_2.current?.value : ''),
-  //       image: URL.createObjectURL(this.fileRef!.current!.files![0]),
-  //     };
-
-  //     this.props.addCard(newCard);
-  //     await this.setState({
-  //       formIsValid: true,
-  //     });
-  //     setTimeout(
-  //       () =>
-  //         this.setState({
-  //           formIsValid: false,
-  //         }),
-  //       5000
-  //     );
-  //     //this.clearFields();
-  //   }
-  // };
 
   render() {
     const {
