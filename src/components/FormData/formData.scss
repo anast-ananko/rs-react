@@ -35,6 +35,7 @@
 .radio {
     display: flex;
     margin-bottom: 20px;
+    flex-direction: column;
 }
 
 .legend {
@@ -52,6 +53,7 @@
 .form__checkbox {
     display: flex;
     margin-bottom: 20px;
+    flex-direction: column;
 }
 
 .form__checkbox-item {
@@ -109,4 +111,12 @@
 .item__text,
 .item__color {
     text-transform: capitalize; 
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
 }

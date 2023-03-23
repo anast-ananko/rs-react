@@ -6,10 +6,10 @@ export interface IFormProps {
 
 export interface IFormState {
   formIsValid: boolean;
-  titleError: string;
+  inputError: string;
   dateError: string;
-  colorError: string;
-  sizeError: string;
+  selectError: string;
+  radioError: string;
   checkboxError: string;
-  imageError: string;
+  fileError: string;
 }
