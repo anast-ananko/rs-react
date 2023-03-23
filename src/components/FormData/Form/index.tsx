@@ -1,6 +1,7 @@
 import React, { Component, createRef, RefObject } from 'react';
 
 import { IFormProps, IFormState } from '../../../interfaces/form';
+import InputText from './InputText';
 
 class Form extends Component<IFormProps, IFormState> {
   inputRef: RefObject<HTMLInputElement>;
@@ -67,54 +68,56 @@ class Form extends Component<IFormProps, IFormState> {
     }
   };
 
-  validateInput = (): void => {
+  validateInput = () => {
     const re = /[а-яА-ЯёЁa-zA-Z\d]{5,}/;
 
     if (!re.test(this.inputRef.current!.value)) {
       this.setState({
-        inputError: 'Error: minimum length is 3 characters',
+        inputError: 'Error: minimum length is 5 characters',
       });
+      return false;
     } else {
       this.setState({
         inputError: '',
       });
+      return true;
     }
   };
 
-  validateDate = (): void => {
-    const date = Date.now();
-    const date1 = new Date(this.dateRef.current!.value);
-    console.log(date);
-    console.log(+date - +date1);
-
+  validateDate = () => {
     if (!this.dateRef.current!.value) {
       this.setState({
         dateError: 'Error: required field',
       });
+      return false;
     } else if (+Date.now() - +new Date(this.dateRef.current!.value) < 0) {
       this.setState({
         dateError: 'Error: date cannot be greater than current',
       });
+      return false;
     } else {
       this.setState({
         dateError: '',
       });
+      return true;
     }
   };
 
-  validateSelect = (): void => {
+  validateSelect = () => {
     if (this.selectRef.current!.value === 'empty') {
       this.setState({
         selectError: 'Error: required field',
       });
+      return false;
     } else {
       this.setState({
         selectError: '',
       });
+      return true;
     }
   };
 
-  validateRadio = (): void => {
+  validateRadio = () => {
     if (
       !this.radioRef_1.current!.checked &&
       !this.radioRef_3.current!.checked &&
@@ -123,48 +126,62 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         radioError: 'Error: required field',
       });
+      return false;
     } else {
       this.setState({
         radioError: '',
       });
+      return true;
     }
   };
 
-  validateCheckbox = (): void => {
+  validateCheckbox = () => {
     if (!this.checkboxRef_1.current!.checked && !this.checkboxRef_2.current!.checked) {
       this.setState({
         checkboxError: 'Error: required field',
       });
+      return false;
     } else {
       this.setState({
         checkboxError: '',
       });
+      return true;
     }
   };
 
-  validateFile = (): void => {
+  validateFile = () => {
     if (!this.fileRef.current!.value) {
       this.setState({
         fileError: 'Error: required field',
       });
+      return false;
     } else {
       this.setState({
         fileError: '',
       });
+      return true;
     }
   };
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    const { inputError, dateError, selectError, radioError, checkboxError, fileError } = this.state;
+  validateForm = () => {
+    if (
+      this.validateInput() &&
+      this.validateDate() &&
+      this.validateSelect() &&
+      this.validateRadio() &&
+      this.validateCheckbox() &&
+      this.validateFile()
+    ) {
+      this.setState({
+        formIsValid: true,
+      });
+      return true;
+    }
+  };
+
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.validateInput();
-    this.validateDate();
-    this.validateSelect();
-    this.validateRadio();
-    this.validateCheckbox();
-    this.validateFile();
-    if (inputError && dateError && selectError && radioError && checkboxError && fileError) {
-      console.log('ok');
+    if (this.validateForm()) {
       const newCard = {
         title: this.inputRef.current!.value,
         date: this.dateRef.current!.value,
@@ -180,20 +197,59 @@ class Form extends Component<IFormProps, IFormState> {
           (this.checkboxRef_2.current?.checked ? this.checkboxRef_2.current?.value : ''),
         image: URL.createObjectURL(this.fileRef!.current!.files![0]),
       };
+
       this.props.addCard(newCard);
-      this.setState({
-        formIsValid: true,
-      });
-      setTimeout(
-        () =>
-          this.setState({
-            formIsValid: false,
-          }),
-        5000
-      );
-      //this.clearFields();
     }
+    setTimeout(
+      () =>
+        this.setState({
+          formIsValid: false,
+        }),
+      5000
+    );
+    //this.clearFields();
   };
+
+  // handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   const { inputError, dateError, selectError, radioError, checkboxError, fileError } = this.state;
+  //   e.preventDefault();
+  //   await this.validateInput();
+  //   await this.validateDate();
+  //   await this.validateSelect();
+  //   await this.validateRadio();
+  //   await this.validateCheckbox();
+  //   await this.validateFile();
+  //   if (!inputError && !dateError && !selectError && !radioError && !checkboxError && !fileError) {
+  //     const newCard = {
+  //       title: this.inputRef.current!.value,
+  //       date: this.dateRef.current!.value,
+  //       color: this.selectRef.current!.value,
+  //       size: this.radioRef_1.current!.checked
+  //         ? this.radioRef_1.current!.value
+  //         : this.radioRef_2.current!.checked
+  //         ? this.radioRef_2.current!.value
+  //         : this.radioRef_3.current!.value,
+  //       checkbox:
+  //         (this.checkboxRef_1.current?.checked ? this.checkboxRef_1.current?.value : '') +
+  //         ' ' +
+  //         (this.checkboxRef_2.current?.checked ? this.checkboxRef_2.current?.value : ''),
+  //       image: URL.createObjectURL(this.fileRef!.current!.files![0]),
+  //     };
+
+  //     this.props.addCard(newCard);
+  //     await this.setState({
+  //       formIsValid: true,
+  //     });
+  //     setTimeout(
+  //       () =>
+  //         this.setState({
+  //           formIsValid: false,
+  //         }),
+  //       5000
+  //     );
+  //     //this.clearFields();
+  //   }
+  // };
 
   render() {
     const {
@@ -209,13 +265,14 @@ class Form extends Component<IFormProps, IFormState> {
     return (
       <div className="form">
         <form className="form__content" onSubmit={this.handleSubmit}>
-          <div className="form__input">
+          {/* <div className="form__input">
             <label htmlFor="form__input" className="form__label">
               Title:
             </label>
             <input type="text" id="form__input" ref={this.inputRef} />
             {inputError ? <div className="error">{inputError}</div> : null}
-          </div>
+          </div> */}
+          <InputText state={this.state} ref={this.inputRef} />
           <div className="form__date">
             <label htmlFor="form__date" className="form__label">
               Date of sale:
