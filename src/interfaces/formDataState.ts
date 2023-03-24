@@ -1,11 +1,4 @@
-export interface ICard {
-  title: string;
-  date: string;
-  color: string;
-  size: string;
-  checkbox: string;
-  image: string;
-}
+import { ICard } from './card';
 
 export interface IFormDataState {
   cards: ICard[];

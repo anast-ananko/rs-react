@@ -1,4 +1,4 @@
-import { ICard } from './formDataState';
+import { ICard } from './card';
 
 export interface IFormProps {
   addCard: (card: ICard) => void;

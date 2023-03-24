@@ -2,6 +2,11 @@ import React, { Component, createRef, RefObject } from 'react';
 
 import { IFormProps, IFormState } from '../../../interfaces/form';
 import InputText from './InputText';
+import InputDate from './InputDate';
+import Select from './Select';
+import InputRadioItem from './InputRadioItem';
+import InputCheckboxItem from './InputCheckboxItem';
+import InputFile from './InputFile';
 
 class Form extends Component<IFormProps, IFormState> {
   formRef: RefObject<HTMLFormElement>;
@@ -190,117 +195,59 @@ class Form extends Component<IFormProps, IFormState> {
   };
 
   render() {
-    const {
-      formIsValid,
-      inputError,
-      dateError,
-      selectError,
-      radioError,
-      checkboxError,
-      fileError,
-    } = this.state;
+    const { formIsValid, radioError, checkboxError } = this.state;
+
+    const radioInputItems = [
+      {
+        name: 'small',
+        ref: this.radioRef_1,
+      },
+      { name: 'medium', ref: this.radioRef_2 },
+      { name: 'big', ref: this.radioRef_3 },
+    ];
+
+    const checkboxInputItems = [
+      {
+        name: 'postcard',
+        ref: this.checkboxRef_1,
+      },
+      {
+        name: 'trinket',
+        ref: this.checkboxRef_2,
+      },
+    ];
 
     return (
       <div className="form">
         <form className="form__content" ref={this.formRef} onSubmit={this.handleSubmit}>
-          {/* <div className="form__input">
-            <label htmlFor="form__input" className="form__label">
-              Title:
-            </label>
-            <input type="text" id="form__input" ref={this.inputRef} />
-            {inputError ? <div className="error">{inputError}</div> : null}
-          </div> */}
           <InputText state={this.state} ref={this.inputRef} />
-          <div className="form__date">
-            <label htmlFor="form__date" className="form__label">
-              Date of sale:
-            </label>
-            <input type="date" id="form__date" ref={this.dateRef} />
-            {dateError ? <div className="error">{dateError}</div> : null}
-          </div>
-          <div className="form__select">
-            <label htmlFor="form__select" className="form__label">
-              Color:
-            </label>
-            <select id="form__select" ref={this.selectRef}>
-              <option value="empty"></option>
-              <option value="red">Red</option>
-              <option value="orange">Orange</option>
-              <option value="pink">Pink</option>
-              <option value="blue">Blue</option>
-            </select>
-            {selectError ? <div className="error">{selectError}</div> : null}
-          </div>
+          <InputDate state={this.state} ref={this.dateRef} />
+          <Select state={this.state} ref={this.selectRef} />
           <fieldset className="radio">
             <legend className="legend">Size:</legend>
-            <div className="form__radio-item">
-              <input
-                type="radio"
-                id="form__radio-1"
-                className="form__radio"
-                value="small"
-                name="size"
-                ref={this.radioRef_1}
-              />
-              <label htmlFor="form__radio-1">Small</label>
-            </div>
-            <div className="form__radio-item">
-              <input
-                type="radio"
-                id="form__radio-2"
-                className="form__radio"
-                value="medium"
-                name="size"
-                ref={this.radioRef_2}
-              />
-              <label htmlFor="form__radio-2">Medium</label>
-            </div>
-            <div className="form__radio-item">
-              <input
-                type="radio"
-                className="form__radio"
-                id="form__radio-3"
-                value="big"
-                name="size"
-                ref={this.radioRef_3}
-              />
-              <label htmlFor="form__radio-3">Big</label>
-            </div>
+            {radioInputItems.map((item, index) => (
+              <InputRadioItem key={index} name={item.name} index={index} ref={item.ref} />
+            ))}
             {radioError ? <div className="error">{radioError}</div> : null}
           </fieldset>
           <fieldset className="form__checkbox">
             <legend className="legend">Gift:</legend>
-            <div className="form__checkbox-item">
-              <input
-                type="checkbox"
-                name="gift"
-                id="postcard"
-                value="postcard"
-                ref={this.checkboxRef_1}
-              />
-              <label htmlFor="postcard">Postcard</label>
-            </div>
-            <div className="form__checkbox-item">
-              <input
-                type="checkbox"
-                name="gift"
-                id="trinket"
-                value="trinket"
-                ref={this.checkboxRef_2}
-              />
-              <label htmlFor="trinket">Trinket</label>
-            </div>
+            {checkboxInputItems.map((item, index) => (
+              <InputCheckboxItem key={index} name={item.name} index={index} ref={item.ref} />
+            ))}
             {checkboxError ? <div className="error">{checkboxError}</div> : null}
           </fieldset>
-          <div className="form__file">
-            <label htmlFor="form__file">Image: </label>
-            <input id="form__file" type="file" name="file" ref={this.fileRef} />
-            {fileError ? <div className="error">{fileError}</div> : null}
-          </div>
+          <InputFile state={this.state} ref={this.fileRef} />
           <button type="submit" className="form__button">
             Add card
           </button>
-          {formIsValid && <div className="success">Сard has been added</div>}
+          {formIsValid && (
+            <>
+              <div className="success">
+                <i className="fa-solid fa-exclamation"></i>Сard has been added
+              </div>
+            </>
+          )}
         </form>
       </div>
     );

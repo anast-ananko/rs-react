@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 
-import { IFormState } from '../../../../interfaces/form';
+import { IInputProps } from '../../../../interfaces/inputProps';
 
-interface IInputText {
-  state: IFormState;
-}
-
-const InputText = forwardRef<HTMLInputElement, IInputText>((props, ref) => {
+const InputText = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   return (
     <div className="form__input">
       <label htmlFor="form__input" className="form__label">
