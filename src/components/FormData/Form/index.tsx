@@ -4,6 +4,7 @@ import { IFormProps, IFormState } from '../../../interfaces/form';
 import InputText from './InputText';
 
 class Form extends Component<IFormProps, IFormState> {
+  formRef: RefObject<HTMLFormElement>;
   inputRef: RefObject<HTMLInputElement>;
   dateRef: RefObject<HTMLInputElement>;
   selectRef: RefObject<HTMLSelectElement>;
@@ -27,6 +28,7 @@ class Form extends Component<IFormProps, IFormState> {
       fileError: '',
     };
 
+    this.formRef = createRef<HTMLFormElement>();
     this.inputRef = createRef<HTMLInputElement>();
     this.dateRef = createRef<HTMLInputElement>();
     this.selectRef = createRef<HTMLSelectElement>();
@@ -39,33 +41,7 @@ class Form extends Component<IFormProps, IFormState> {
   }
 
   clearFields = () => {
-    if (this.inputRef && this.inputRef.current) {
-      this.inputRef.current.value = '';
-    }
-    if (this.dateRef && this.dateRef.current) {
-      this.dateRef.current.value = '';
-    }
-    if (this.selectRef && this.selectRef.current) {
-      this.selectRef.current.value = '';
-    }
-    if (this.radioRef_1 && this.radioRef_1.current) {
-      this.radioRef_1.current.value = '';
-    }
-    if (this.radioRef_2 && this.radioRef_2.current) {
-      this.radioRef_2.current.value = '';
-    }
-    if (this.radioRef_3 && this.radioRef_3.current) {
-      this.radioRef_3.current.value = '';
-    }
-    if (this.checkboxRef_1 && this.checkboxRef_1.current) {
-      this.checkboxRef_1.current.value = '';
-    }
-    if (this.checkboxRef_2 && this.checkboxRef_2.current) {
-      this.checkboxRef_2.current.value = '';
-    }
-    if (this.fileRef && this.fileRef.current) {
-      this.fileRef.current.value = '';
-    }
+    this.formRef.current?.reset();
   };
 
   validateInput = () => {
@@ -120,7 +96,7 @@ class Form extends Component<IFormProps, IFormState> {
   validateRadio = () => {
     if (
       !this.radioRef_1.current!.checked &&
-      !this.radioRef_3.current!.checked &&
+      !this.radioRef_2.current!.checked &&
       !this.radioRef_3.current!.checked
     ) {
       this.setState({
@@ -209,7 +185,7 @@ class Form extends Component<IFormProps, IFormState> {
           }),
         5000
       );
-      //this.clearFields();
+      this.clearFields();
     }
   };
 
@@ -226,7 +202,7 @@ class Form extends Component<IFormProps, IFormState> {
 
     return (
       <div className="form">
-        <form className="form__content" onSubmit={this.handleSubmit}>
+        <form className="form__content" ref={this.formRef} onSubmit={this.handleSubmit}>
           {/* <div className="form__input">
             <label htmlFor="form__input" className="form__label">
               Title:
