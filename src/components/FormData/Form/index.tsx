@@ -7,6 +7,7 @@ import Select from './Select';
 import InputRadioItem from './InputRadioItem';
 import InputCheckboxItem from './InputCheckboxItem';
 import InputFile from './InputFile';
+import { validateForm } from '../../../helpers/validationFunctions';
 
 class Form extends Component<IFormProps, IFormState> {
   formRef: RefObject<HTMLFormElement>;
@@ -49,116 +50,22 @@ class Form extends Component<IFormProps, IFormState> {
     this.formRef.current?.reset();
   };
 
-  validateInput = () => {
-    const re = /[а-яА-ЯёЁa-zA-Z\d]{5,}/;
-
-    if (!re.test(this.inputRef.current!.value)) {
-      this.setState({
-        inputError: 'Error: minimum length is 5 characters',
-      });
-    } else {
-      this.setState({
-        inputError: '',
-      });
-    }
-    return this.state.inputError ? false : true;
-  };
-
-  validateDate = () => {
-    if (!this.dateRef.current!.value) {
-      this.setState({
-        dateError: 'Error: required field',
-      });
-    } else if (+Date.now() < +new Date(this.dateRef.current!.value)) {
-      this.setState({
-        dateError: 'Error: date cannot be greater than current',
-      });
-    } else {
-      this.setState({
-        dateError: '',
-      });
-    }
-    return this.state.dateError ? false : true;
-  };
-
-  validateSelect = () => {
-    if (this.selectRef.current!.value === 'empty') {
-      this.setState({
-        selectError: 'Error: required field',
-      });
-    } else {
-      this.setState({
-        selectError: '',
-      });
-    }
-    return this.state.selectError ? false : true;
-  };
-
-  validateRadio = () => {
-    if (
-      !this.radioRef_1.current!.checked &&
-      !this.radioRef_2.current!.checked &&
-      !this.radioRef_3.current!.checked
-    ) {
-      this.setState({
-        radioError: 'Error: required field',
-      });
-    } else {
-      this.setState({
-        radioError: '',
-      });
-    }
-    return this.state.radioError ? false : true;
-  };
-
-  validateCheckbox = () => {
-    if (!this.checkboxRef_1.current!.checked && !this.checkboxRef_2.current!.checked) {
-      this.setState({
-        checkboxError: 'Error: required field',
-      });
-    } else {
-      this.setState({
-        checkboxError: '',
-      });
-    }
-    return this.state.checkboxError ? false : true;
-  };
-
-  validateFile = () => {
-    if (!this.fileRef.current!.value) {
-      this.setState({
-        fileError: 'Error: required field',
-      });
-    } else {
-      this.setState({
-        fileError: '',
-      });
-    }
-    return this.state.fileError ? false : true;
-  };
-
-  validateForm = () => {
-    const validationResults = {
-      input: this.validateInput(),
-      date: this.validateDate(),
-      select: this.validateSelect(),
-      radio: this.validateRadio(),
-      checkbox: this.validateCheckbox(),
-      file: this.validateFile(),
-    };
-
-    const isFormValid = Object.values(validationResults).every((result) => result);
-
-    this.setState({
-      formIsValid: isFormValid,
-    });
-
-    return isFormValid;
-  };
-
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (this.validateForm()) {
+    if (
+      validateForm(
+        this.inputRef.current!.value,
+        this.dateRef.current!.value,
+        this.selectRef.current!.value,
+        this.radioRef_1.current!.checked,
+        this.radioRef_2.current!.checked,
+        this.radioRef_3.current!.checked,
+        this.checkboxRef_1.current!.checked,
+        this.checkboxRef_2.current!.checked,
+        this.fileRef.current!.value,
+        this
+      )
+    ) {
       const newCard = {
         title: this.inputRef.current!.value,
         date: this.dateRef.current!.value,

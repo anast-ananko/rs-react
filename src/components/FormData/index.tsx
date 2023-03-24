@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import Form from './Form';
 import FormCardsList from './FormCardsList';
-import { IFormDataState, ICard } from '../../interfaces/formDataState';
+import { IFormDataState } from '../../interfaces/formDataState';
+import { ICard } from '../../interfaces/card';
 
 import './formData.scss';
 
@@ -12,7 +13,6 @@ class FormData extends Component<Record<string, never>, IFormDataState> {
   };
 
   addCard = (card: ICard) => {
-    console.log(card);
     this.setState({
       cards: [...this.state.cards, card],
     });
