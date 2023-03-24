@@ -56,13 +56,12 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         inputError: 'Error: minimum length is 5 characters',
       });
-      return false;
     } else {
       this.setState({
         inputError: '',
       });
-      return true;
     }
+    return this.state.inputError ? false : true;
   };
 
   validateDate = () => {
@@ -70,18 +69,16 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         dateError: 'Error: required field',
       });
-      return false;
-    } else if (+Date.now() - +new Date(this.dateRef.current!.value) < 0) {
+    } else if (+Date.now() < +new Date(this.dateRef.current!.value)) {
       this.setState({
         dateError: 'Error: date cannot be greater than current',
       });
-      return false;
     } else {
       this.setState({
         dateError: '',
       });
-      return true;
     }
+    return this.state.dateError ? false : true;
   };
 
   validateSelect = () => {
@@ -89,13 +86,12 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         selectError: 'Error: required field',
       });
-      return false;
     } else {
       this.setState({
         selectError: '',
       });
-      return true;
     }
+    return this.state.selectError ? false : true;
   };
 
   validateRadio = () => {
@@ -107,13 +103,12 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         radioError: 'Error: required field',
       });
-      return false;
     } else {
       this.setState({
         radioError: '',
       });
-      return true;
     }
+    return this.state.radioError ? false : true;
   };
 
   validateCheckbox = () => {
@@ -121,13 +116,12 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         checkboxError: 'Error: required field',
       });
-      return false;
     } else {
       this.setState({
         checkboxError: '',
       });
-      return true;
     }
+    return this.state.checkboxError ? false : true;
   };
 
   validateFile = () => {
@@ -135,13 +129,12 @@ class Form extends Component<IFormProps, IFormState> {
       this.setState({
         fileError: 'Error: required field',
       });
-      return false;
     } else {
       this.setState({
         fileError: '',
       });
-      return true;
     }
+    return this.state.fileError ? false : true;
   };
 
   validateForm = () => {
