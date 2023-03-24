@@ -12,7 +12,7 @@ class FormData extends Component<Record<string, never>, IFormDataState> {
     cards: [],
   };
 
-  addCard = (card: ICard) => {
+  addCard = (card: ICard): void => {
     this.setState({
       cards: [...this.state.cards, card],
     });

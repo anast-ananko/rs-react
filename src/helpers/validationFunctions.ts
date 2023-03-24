@@ -2,7 +2,7 @@ import { Component } from 'react';
 
 import { IFormState, IFormProps } from 'interfaces/form';
 
-const validateInput = (value: string, component: Component<IFormProps, IFormState>) => {
+const validateInput = (value: string, component: Component<IFormProps, IFormState>): boolean => {
   const re = /[а-яА-ЯёЁa-zA-Z\d]{5,}/;
   let error = '';
 
@@ -18,7 +18,7 @@ const validateInput = (value: string, component: Component<IFormProps, IFormStat
   return error ? false : true;
 };
 
-const validateDate = (value: string, component: Component<IFormProps, IFormState>) => {
+const validateDate = (value: string, component: Component<IFormProps, IFormState>): boolean => {
   let error = '';
 
   if (!value) {
@@ -35,7 +35,7 @@ const validateDate = (value: string, component: Component<IFormProps, IFormState
   return error ? false : true;
 };
 
-const validateSelect = (value: string, component: Component<IFormProps, IFormState>) => {
+const validateSelect = (value: string, component: Component<IFormProps, IFormState>): boolean => {
   let error = '';
 
   if (value === 'empty') {
@@ -55,7 +55,7 @@ const validateRadio = (
   value_2: boolean,
   value_3: boolean,
   component: Component<IFormProps, IFormState>
-) => {
+): boolean => {
   let error = '';
 
   if (!value_1 && !value_2 && !value_3) {
@@ -74,7 +74,7 @@ const validateCheckbox = (
   value_1: boolean,
   value_2: boolean,
   component: Component<IFormProps, IFormState>
-) => {
+): boolean => {
   let error = '';
 
   if (!value_1 && !value_2) {
@@ -89,7 +89,7 @@ const validateCheckbox = (
   return error ? false : true;
 };
 
-const validateFile = (value: string, component: Component<IFormProps, IFormState>) => {
+const validateFile = (value: string, component: Component<IFormProps, IFormState>): boolean => {
   let error = '';
 
   if (!value) {
@@ -115,7 +115,7 @@ export const validateForm = (
   checkboxRef_2: boolean,
   fileRef: string,
   component: Component<IFormProps, IFormState>
-) => {
+): boolean => {
   const validationResults = {
     input: validateInput(inputRef, component),
     date: validateDate(dateRef, component),

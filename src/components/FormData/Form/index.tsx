@@ -46,51 +46,65 @@ class Form extends Component<IFormProps, IFormState> {
     this.fileRef = createRef<HTMLInputElement>();
   }
 
-  clearFields = () => {
+  clearFields = (): void => {
     this.formRef.current?.reset();
   };
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (
-      validateForm(
-        this.inputRef.current!.value,
-        this.dateRef.current!.value,
-        this.selectRef.current!.value,
-        this.radioRef_1.current!.checked,
-        this.radioRef_2.current!.checked,
-        this.radioRef_3.current!.checked,
-        this.checkboxRef_1.current!.checked,
-        this.checkboxRef_2.current!.checked,
-        this.fileRef.current!.value,
-        this
-      )
+      this.inputRef.current !== null &&
+      this.dateRef.current !== null &&
+      this.selectRef.current !== null &&
+      this.radioRef_1.current !== null &&
+      this.radioRef_2.current !== null &&
+      this.radioRef_3.current !== null &&
+      this.checkboxRef_1.current !== null &&
+      this.checkboxRef_2.current !== null &&
+      this.fileRef.current !== null
     ) {
-      const newCard = {
-        title: this.inputRef.current!.value,
-        date: this.dateRef.current!.value,
-        color: this.selectRef.current!.value,
-        size: this.radioRef_1.current!.checked
-          ? this.radioRef_1.current!.value
-          : this.radioRef_2.current!.checked
-          ? this.radioRef_2.current!.value
-          : this.radioRef_3.current!.value,
-        checkbox:
-          (this.checkboxRef_1.current?.checked ? this.checkboxRef_1.current?.value : '') +
-          ' ' +
-          (this.checkboxRef_2.current?.checked ? this.checkboxRef_2.current?.value : ''),
-        image: URL.createObjectURL(this.fileRef!.current!.files![0]),
-      };
+      if (
+        validateForm(
+          this.inputRef.current.value,
+          this.dateRef.current.value,
+          this.selectRef.current.value,
+          this.radioRef_1.current.checked,
+          this.radioRef_2.current.checked,
+          this.radioRef_3.current.checked,
+          this.checkboxRef_1.current.checked,
+          this.checkboxRef_2.current.checked,
+          this.fileRef.current.value,
+          this
+        )
+      ) {
+        if (this.fileRef.current.files !== null) {
+          const newCard = {
+            title: this.inputRef.current.value,
+            date: this.dateRef.current.value,
+            color: this.selectRef.current.value,
+            size: this.radioRef_1.current.checked
+              ? this.radioRef_1.current.value
+              : this.radioRef_2.current.checked
+              ? this.radioRef_2.current.value
+              : this.radioRef_3.current.value,
+            checkbox:
+              (this.checkboxRef_1.current.checked ? this.checkboxRef_1.current.value : '') +
+              ' ' +
+              (this.checkboxRef_2.current.checked ? this.checkboxRef_2.current.value : ''),
+            image: URL.createObjectURL(this.fileRef.current.files[0]),
+          };
 
-      this.props.addCard(newCard);
-      setTimeout(
-        () =>
-          this.setState({
-            formIsValid: false,
-          }),
-        5000
-      );
-      this.clearFields();
+          this.props.addCard(newCard);
+          setTimeout(
+            () =>
+              this.setState({
+                formIsValid: false,
+              }),
+            5000
+          );
+          this.clearFields();
+        }
+      }
     }
   };
 
@@ -98,23 +112,14 @@ class Form extends Component<IFormProps, IFormState> {
     const { formIsValid, radioError, checkboxError } = this.state;
 
     const radioInputItems = [
-      {
-        name: 'small',
-        ref: this.radioRef_1,
-      },
+      { name: 'small', ref: this.radioRef_1 },
       { name: 'medium', ref: this.radioRef_2 },
       { name: 'big', ref: this.radioRef_3 },
     ];
 
     const checkboxInputItems = [
-      {
-        name: 'postcard',
-        ref: this.checkboxRef_1,
-      },
-      {
-        name: 'trinket',
-        ref: this.checkboxRef_2,
-      },
+      { name: 'postcard', ref: this.checkboxRef_1 },
+      { name: 'trinket', ref: this.checkboxRef_2 },
     ];
 
     return (
