@@ -1,17 +1,17 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import Header from '.';
 
 describe('Header', () => {
   it('should render header links', () => {
-    render(
+    const { getAllByRole } = render(
       <MemoryRouter>
         <Header />
       </MemoryRouter>
     );
-    const links = screen.getAllByRole('link');
-    expect(links).toHaveLength(2);
+    const links = getAllByRole('link');
+    expect(links).toHaveLength(3);
   });
 });

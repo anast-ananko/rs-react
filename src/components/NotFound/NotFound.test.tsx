@@ -1,14 +1,14 @@
 import React from 'react';
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import NotFound from '.';
 
 describe('NotFound', () => {
   it('renders correctly', () => {
-    render(<NotFound />);
+    const { getByRole } = render(<NotFound />);
     expect(
-      screen.getByRole('heading', {
+      getByRole('heading', {
         level: 3,
       })
     ).toHaveTextContent('Not found');

@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import SearchBar from '.';
 
@@ -9,15 +10,14 @@ describe('SearchBar', () => {
   };
 
   it('should render input and button', () => {
-    render(<SearchBar {...initialState} />);
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    const { getByRole } = render(<SearchBar {...initialState} />);
+    expect(getByRole('textbox')).toBeInTheDocument();
+    expect(getByRole('button')).toBeInTheDocument();
   });
 
-  it('should update query in state when user types into input field', () => {
-    const { container } = render(<SearchBar {...initialState} />);
-    const input = container.querySelector('input[type="text"]')!;
-    fireEvent.change(input, { target: { value: 'test' } });
-    expect(input).toHaveValue('test');
+  it('should update query in state when user types into input field', async () => {
+    const { getByRole } = render(<SearchBar {...initialState} />);
+    userEvent.type(getByRole('textbox'), 'test');
+    await waitFor(() => expect(getByRole('textbox')).toHaveValue('test'));
   });
 });
