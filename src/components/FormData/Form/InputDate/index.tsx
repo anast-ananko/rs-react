@@ -8,7 +8,7 @@ const InputDate = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
       <label htmlFor="form__date" className="form__label">
         Date of sale:
       </label>
-      <input type="date" id="form__date" ref={ref} />
+      <input type="date" id="form__date" ref={ref} name="date" />
       {props.state.dateError ? <div className="error">{props.state.dateError}</div> : null}
     </div>
   );

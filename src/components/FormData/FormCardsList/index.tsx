@@ -8,10 +8,10 @@ class FormCardsList extends Component<IFormDataState, Record<string, never>> {
   }
   render() {
     return (
-      <div className="form-cards__list">
+      <div className="form-cards__list" data-testid="cards-list">
         {this.props.cards &&
           this.props.cards.map((item, index) => (
-            <div key={index} className="form-cards__item">
+            <div key={index} className="form-cards__item" data-testid="form-card">
               <img src={item.image} alt={item.title} className="item__image" />
               <div className="item__content">
                 <h3 className="item__title">Title: {item.title}</h3>

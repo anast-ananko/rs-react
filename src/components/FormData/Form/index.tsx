@@ -124,7 +124,12 @@ class Form extends Component<IFormProps, IFormState> {
 
     return (
       <div className="form">
-        <form className="form__content" ref={this.formRef} onSubmit={this.handleSubmit}>
+        <form
+          className="form__content"
+          data-testid="form"
+          ref={this.formRef}
+          onSubmit={this.handleSubmit}
+        >
           <InputText state={this.state} ref={this.inputRef} />
           <InputDate state={this.state} ref={this.dateRef} />
           <Select state={this.state} ref={this.selectRef} />

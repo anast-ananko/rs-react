@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import App from './App';
 
 describe('App', () => {
   it('renders correctly', () => {
-    render(<App />);
+    const { getByRole } = render(<App />);
     expect(
-      screen.getByRole('heading', {
+      getByRole('heading', {
         level: 3,
       })
     ).toHaveTextContent('Home');
