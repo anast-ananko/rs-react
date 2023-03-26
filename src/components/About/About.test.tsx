@@ -1,14 +1,14 @@
 import React from 'react';
 import { describe, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import About from '.';
 
 describe('About', () => {
   it('renders correctly', () => {
-    render(<About />);
+    const { getByRole } = render(<About />);
     expect(
-      screen.getByRole('heading', {
+      getByRole('heading', {
         level: 3,
       })
     ).toHaveTextContent('About Us');

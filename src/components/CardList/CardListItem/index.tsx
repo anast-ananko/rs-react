@@ -4,8 +4,9 @@ import { ICardListItemProps } from '../../../interfaces/cardListItemProps';
 class CardListItem extends Component<ICardListItemProps> {
   render() {
     const { id, name, latinName, image } = this.props;
+
     return (
-      <div className="card" key={id}>
+      <div data-testid="card" className="card" key={id}>
         <div className="card__image">
           <img src={image} alt={name} className="card__img" />
         </div>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { headerTitle } from '../../helpers/headerTitle';
+
 import './header.scss';
 
 class Header extends Component {
@@ -8,10 +10,9 @@ class Header extends Component {
     activePage: window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1),
   };
 
-  handleClick = (e: React.MouseEvent<HTMLAnchorElement>): void => {
-    const element = e.target as HTMLElement;
+  handleClick = (): void => {
     this.setState({
-      activePage: element.getAttribute('data-name'),
+      activePage: window.location.pathname === '/' ? 'home' : window.location.pathname.slice(1),
     });
   };
 
@@ -20,24 +21,16 @@ class Header extends Component {
       <>
         <header className="header">
           <div className="container header__container">
-            <NavLink data-name="home" to="/" className="header__link" onClick={this.handleClick}>
+            <NavLink to="/" className="header__link" onClick={this.handleClick}>
               Home
             </NavLink>
-            <NavLink
-              data-name="about"
-              to="/about"
-              className="header__link"
-              onClick={this.handleClick}
-            >
+            <NavLink to="/about" className="header__link" onClick={this.handleClick}>
               About
             </NavLink>
-            {this.state.activePage === 'home' ? (
-              <div className="header__title">Home page</div>
-            ) : this.state.activePage === 'about' ? (
-              <div className="header__title">About page</div>
-            ) : (
-              <div className="header__title">Not found page</div>
-            )}
+            <NavLink to="/form" className="header__link" onClick={this.handleClick}>
+              Form
+            </NavLink>
+            <div className="header__title">{headerTitle()}</div>
           </div>
         </header>
       </>
