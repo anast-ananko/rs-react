@@ -1,0 +1,23 @@
+.search {
+    margin: 0 auto;
+    display: flex;
+}
+
+.search__input {
+    position: relative;
+    margin-right: 10px;
+}
+
+.fa-sharp {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.search__button {
+    text-transform: uppercase;
+
+    &:hover {
+        cursor: pointer;
+    }    
+}
