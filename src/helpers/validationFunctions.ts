@@ -6,7 +6,9 @@ const validateInput = (value: string, component: Component<IFormProps, IFormStat
   const re = /[а-яА-ЯёЁa-zA-Z\d]{5,}/;
   let error = '';
 
-  if (!re.test(value)) {
+  if (value.length === 0) {
+    error = 'Error: required field';
+  } else if (!re.test(value)) {
     error = 'Error: minimum length is 5 characters';
   } else {
     error = '';

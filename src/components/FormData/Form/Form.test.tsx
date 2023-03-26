@@ -32,14 +32,11 @@ describe('Form', () => {
 
   it('should show error messages for invalid data', async () => {
     const addCard = vi.fn();
-    const { findByText, findAllByText, getByText } = render(<Form addCard={addCard} />);
+    const { findAllByText, getByText } = render(<Form addCard={addCard} />);
 
     userEvent.click(getByText(/add card/i));
 
-    const errorMessages = await Promise.all([
-      findByText(/error: minimum length is 5 characters/i),
-      ...(await findAllByText(/error: required field/i)),
-    ]);
+    const errorMessages = await Promise.all([...(await findAllByText(/error: required field/i))]);
     errorMessages.forEach((errorMessage) => {
       expect(errorMessage).toBeInTheDocument();
     });

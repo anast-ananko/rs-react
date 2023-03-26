@@ -6,6 +6,7 @@ class FormCardsList extends Component<IFormDataState, Record<string, never>> {
   constructor(props: IFormDataState) {
     super(props);
   }
+
   render() {
     return (
       <div className="form-cards__list" data-testid="cards-list">
