@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { headerTitle } from './headerTitle';
+import { headerTitle } from './getHeaderTitle';
 
 describe('headerTitle', () => {
   it('should return correct title for home page', () => {
