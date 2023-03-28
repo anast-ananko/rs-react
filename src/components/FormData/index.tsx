@@ -1,32 +1,25 @@
-import React, { Component } from 'react';
+import React, { FC, useState } from 'react';
 
 import Form from './Form';
 import FormCardsList from './FormCardsList';
-import { IFormDataState } from '../../interfaces/formDataState';
 import { ICard } from '../../interfaces/card';
 
 import './formData.scss';
 
-class FormData extends Component<Record<string, never>, IFormDataState> {
-  state = {
-    cards: [],
+const FormData: FC = () => {
+  const [cards, setCards] = useState<ICard[]>([]);
+
+  const addCard = (card: ICard): void => {
+    setCards([...cards, card]);
   };
 
-  addCard = (card: ICard): void => {
-    this.setState({
-      cards: [...this.state.cards, card],
-    });
-  };
-
-  render() {
-    return (
-      <div className="form-data">
-        <h3 className="form-data__title">Form</h3>
-        <Form addCard={this.addCard} />
-        <FormCardsList cards={this.state.cards} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="form-data">
+      <h3 className="form-data__title">Form</h3>
+      <Form addCard={addCard} />
+      <FormCardsList cards={cards} />
+    </div>
+  );
+};
 
 export default FormData;

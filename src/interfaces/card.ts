@@ -6,3 +6,7 @@ export interface ICard {
   checkbox: string;
   image: string;
 }
+
+export interface ICards {
+  cards: ICard[];
+}
