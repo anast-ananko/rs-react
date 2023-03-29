@@ -1,12 +1,8 @@
 import React from 'react';
-import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-type InputText = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-};
+import { IInput } from '../../../../interfaces/input';
 
-const InputFile = ({ register, errors }: InputText) => (
+const InputFile = ({ register, errors }: Pick<IInput, 'register' | 'errors'>) => (
   <div className="form__file">
     <label htmlFor="file">Image: </label>
     <input

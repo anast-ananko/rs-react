@@ -1,12 +1,8 @@
 import React from 'react';
-import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-type InputText = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-};
+import { IInput } from '../../../../interfaces/input';
 
-const Select = ({ register, errors }: InputText) => (
+const Select = ({ register, errors }: Pick<IInput, 'register' | 'errors'>) => (
   <div className="form__select">
     <label htmlFor="color" className="form__label">
       Color:

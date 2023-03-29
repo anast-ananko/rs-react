@@ -1,31 +1,10 @@
 import React from 'react';
-import { UseFormRegister, FieldValues, FieldErrors, UseFormGetValues } from 'react-hook-form';
 
-type InputText = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-  getValues: UseFormGetValues<FieldValues>;
-};
+import { validateRadio } from '../../../../helpers/validationFunctions';
+import { IInput } from '../../../../interfaces/input';
+import { radioOptions } from '../../../../data/radioOptions';
 
-interface FormData {
-  size: string;
-}
-
-const radioOptions = [
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Big', value: 'big' },
-];
-
-const validateSize = (value: string, otherValues: FormData['size']) => {
-  if (!otherValues || Object.keys(otherValues).length === 0) {
-    return 'Size is required';
-  }
-  const selectedValues = Object.values(otherValues).filter((v) => v === value);
-  if (selectedValues.length === 1) return true;
-};
-
-const InputRadio = ({ register, errors, getValues }: InputText) => (
+const InputRadio = ({ register, errors, getValues }: IInput) => (
   <fieldset className="radio">
     <legend className="legend">Size:</legend>
     {radioOptions.map((option) => (
@@ -36,7 +15,7 @@ const InputRadio = ({ register, errors, getValues }: InputText) => (
           value={option.value}
           id={option.value}
           {...register('size', {
-            validate: (value) => validateSize(value, getValues('size')),
+            validate: (value) => validateRadio(value, getValues('size')),
           })}
         />
         <label htmlFor={option.value}>{option.label}</label>

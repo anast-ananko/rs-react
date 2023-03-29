@@ -1,15 +1,5 @@
 import { ICard } from './card';
 
-export interface IFormProps {
+export interface IForm {
   addCard: (card: ICard) => void;
-}
-
-export interface IFormState {
-  formIsValid: boolean;
-  inputError: string;
-  dateError: string;
-  selectError: string;
-  radioError: string;
-  checkboxError: string;
-  fileError: string;
 }

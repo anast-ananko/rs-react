@@ -1,12 +1,8 @@
 import React from 'react';
-import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-type InputText = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-};
+import { IInput } from '../../../../interfaces/input';
 
-const InputDate = ({ register, errors }: InputText) => (
+const InputDate = ({ register, errors }: Pick<IInput, 'register' | 'errors'>) => (
   <div className="form__date">
     <label htmlFor="date" className="form__label">
       Date of sale:

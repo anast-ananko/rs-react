@@ -1,12 +1,8 @@
 import React from 'react';
-import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-type InputText = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-};
+import { IInput } from '../../../../interfaces/input';
 
-const InputText = ({ register, errors }: InputText) => (
+const InputText = ({ register, errors }: Pick<IInput, 'register' | 'errors'>) => (
   <div className="form__input">
     <label htmlFor="title" className="form__label">
       Title:
@@ -25,6 +21,9 @@ const InputText = ({ register, errors }: InputText) => (
         maxLength: {
           value: 15,
           message: 'Title cannot exceed 15 characters',
+        },
+        validate: {
+          value: (value) => value[0] === value[0].toUpperCase() || 'First letter must be uppercase',
         },
       })}
     />
