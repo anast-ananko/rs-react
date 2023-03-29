@@ -1,23 +1,35 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
+import { UseFormRegister, FieldValues, FieldErrors } from 'react-hook-form';
 
-import { IInputProps } from '../../../../interfaces/inputProps';
+type InputText = {
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
+};
 
-const Select = forwardRef<HTMLSelectElement, IInputProps>((props, ref) => {
-  return (
-    <div className="form__select">
-      <label htmlFor="form__select" className="form__label">
-        Color:
-      </label>
-      <select id="form__select" ref={ref}>
-        <option value="empty"></option>
-        <option value="red">Red</option>
-        <option value="orange">Orange</option>
-        <option value="pink">Pink</option>
-        <option value="blue">Blue</option>
-      </select>
-      {props.state.selectError ? <div className="error">{props.state.selectError}</div> : null}
-    </div>
-  );
-});
+const Select = ({ register, errors }: InputText) => (
+  <div className="form__select">
+    <label htmlFor="color" className="form__label">
+      Color:
+    </label>
+    <select
+      id="color"
+      {...register('color', {
+        required: 'Color is required',
+      })}
+      defaultValue=""
+    >
+      <option value=""></option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="pink">Pink</option>
+      <option value="blue">Blue</option>
+    </select>
+    {errors.color && (
+      <p className="error">
+        <>{errors.color?.message}</>
+      </p>
+    )}
+  </div>
+);
 
 export default Select;
