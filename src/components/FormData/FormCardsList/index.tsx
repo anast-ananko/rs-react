@@ -14,7 +14,7 @@ const FormCardsList: FC<ICards> = ({ cards }) => {
               <div className="item__date">Date: {item.date}</div>
               <div className="item__color">Color: {item.color}</div>
               <div className="item__size">Size: {item.size}</div>
-              <div className="item__text">Gift: {item.checkbox}</div>
+              <div className="item__text">Gift: {item.gift}</div>
             </div>
           </div>
         ))}

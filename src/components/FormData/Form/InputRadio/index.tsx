@@ -15,7 +15,7 @@ const InputRadio = ({ register, errors, getValues }: IInput) => (
           value={option.value}
           id={option.value}
           {...register('size', {
-            validate: (value) => validateRadio(value, getValues('size')),
+            validate: () => validateRadio(getValues('size')),
           })}
         />
         <label htmlFor={option.value}>{option.label}</label>

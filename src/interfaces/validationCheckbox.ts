@@ -1,3 +1,3 @@
 export interface IValidationCheckbox {
-  gift: string;
+  gift: string[];
 }

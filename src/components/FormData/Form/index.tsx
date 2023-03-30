@@ -29,7 +29,7 @@ const Form: FC<IForm> = ({ addCard }) => {
       date: data.date,
       color: data.color,
       size: data.size,
-      checkbox: data.gift.join(' '),
+      gift: data.gift.join(' '),
       image: URL.createObjectURL(data.image[0]),
     };
     reset();
@@ -45,14 +45,13 @@ const Form: FC<IForm> = ({ addCard }) => {
         <InputRadio register={register} errors={errors} getValues={getValues} />
         <InputCheckbox register={register} errors={errors} getValues={getValues} />
         <InputFile register={register} errors={errors} />
-        <input type="submit" className="form__button" />
-
+        <button type="submit" className="form__button">
+          Submit
+        </button>
         {formIsValid && (
-          <>
-            <div className="success">
-              <i className="fa-solid fa-exclamation"></i>Сard has been added
-            </div>
-          </>
+          <div className="success">
+            <i className="fa-solid fa-exclamation"></i>Сard has been added
+          </div>
         )}
       </form>
     </div>

@@ -14,7 +14,7 @@ const InputCheckbox = ({ register, errors, getValues }: IInput) => (
           id={option.value}
           value={option.value}
           {...register('gift', {
-            validate: (value) => validateCheckbox(value[0], getValues('gift')[0]),
+            validate: () => validateCheckbox(getValues('gift')),
           })}
         />
         <label htmlFor={option.value}>{option.label}</label>

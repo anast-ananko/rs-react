@@ -3,7 +3,7 @@ export interface ICard {
   date: string;
   color: string;
   size: string;
-  checkbox: string;
+  gift: string;
   image: string;
 }
 
