@@ -1,4 +1,4 @@
-export interface ICardListItemProps {
+export interface ICardListItem {
   id: number;
   name: string;
   latinName: string;

@@ -19,15 +19,10 @@
     font-size: 22px;
     background-color: rgb(206, 223, 221);
     border-radius: 5px;
-
-    label {
-        text-transform: capitalize;
-    }
 }
 
 .form__label {
     margin-right: 10px;
-    
 }
 
 .form__input,
@@ -111,7 +106,6 @@
     height: 200px;
 }
 
-.item__title,
 .item__size,
 .item__text,
 .item__color {
