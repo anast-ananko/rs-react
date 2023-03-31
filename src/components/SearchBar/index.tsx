@@ -1,13 +1,22 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 
 import './searchBar.scss';
 
 const SearchBar: FC = () => {
-  const [query, setQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
+  const queryObj = localStorage.getItem('searchQuery');
+  const queryParseObj = queryObj ? JSON.parse(queryObj) : '';
+  const [query, setQuery] = useState<string>(queryParseObj);
+  const queryRef = useRef<string | undefined>();
 
   useEffect(() => {
-    localStorage.setItem('searchQuery', query);
+    queryRef.current = query;
   }, [query]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchQuery', JSON.stringify(queryRef.current));
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

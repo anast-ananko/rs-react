@@ -9,7 +9,7 @@ const Home: FC = () => {
   return (
     <div className="home">
       <h3 className="home__title">Home</h3>
-      <SearchBar query="query" />
+      <SearchBar />
       <CardList flowers={flowers} />
     </div>
   );
