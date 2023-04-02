@@ -11,7 +11,7 @@ describe('FormCardsList', () => {
         date: '2022-01-01',
         color: 'red',
         size: 'small',
-        checkbox: 'card-1',
+        gift: 'card-1',
         image: 'https://example.com/image1.jpg',
       },
       {
@@ -19,7 +19,7 @@ describe('FormCardsList', () => {
         date: '2022-02-02',
         color: 'blue',
         size: 'medium',
-        checkbox: 'card-2',
+        gift: 'card-2',
         image: 'https://example.com/image2.jpg',
       },
     ];
