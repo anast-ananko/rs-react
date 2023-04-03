@@ -1,15 +1,19 @@
 import React, { FC } from 'react';
-import { ICardListItem } from '../../../interfaces/cardListItem';
+import { ICardListItem } from '../../../interfaces/searchCard';
 
-const CardListItem: FC<ICardListItem> = ({ id, name, latinName, image }) => {
+const CardListItem: FC<ICardListItem> = ({ card }) => {
   return (
-    <div data-testid="card" className="card" key={id}>
+    <div data-testid="card" className="card" key={card.id}>
       <div className="card__image">
-        <img src={image} alt={name} className="card__img" />
+        <img
+          src={`https://image.tmdb.org/t/p/w300/${card.poster_path}`}
+          alt=""
+          className="card__img"
+        />
       </div>
       <div className="card__content">
-        <h2 className="card__name">{name}</h2>
-        <p className="card__latin-name">{latinName}</p>
+        <h2 className="card__name"></h2>
+        <p className="card__latin-name"></p>
       </div>
     </div>
   );

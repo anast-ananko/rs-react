@@ -1,22 +1,14 @@
 import React, { FC } from 'react';
 import CardListItem from './CardListItem';
-import { IFlowers } from 'interfaces/flowers';
+import { ISearchCards } from '../../interfaces/searchCard';
 
 import './cardList.scss';
 
-const CardList: FC<IFlowers> = ({ flowers }) => {
+const CardList: FC<ISearchCards> = ({ cards }) => {
   return (
     <div className="cards__list">
-      {flowers.map((flower) => {
-        return (
-          <CardListItem
-            key={flower.id}
-            id={flower.id}
-            name={flower.name}
-            latinName={flower.latinName}
-            image={flower.image}
-          />
-        );
+      {cards.map((card) => {
+        return <CardListItem key={card.id} card={card} />;
       })}
     </div>
   );
