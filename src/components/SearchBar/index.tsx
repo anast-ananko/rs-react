@@ -1,25 +1,18 @@
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 
 import './searchBar.scss';
 
-const SearchBar: FC = () => {
-  const queryObj = localStorage.getItem('searchQuery');
-  const queryParseObj = queryObj ? JSON.parse(queryObj) : '';
-  const [query, setQuery] = useState<string>(queryParseObj);
-  const queryRef = useRef<string | undefined>();
+interface ISearchBar {
+  query: string;
+  setQuery: (query: string) => void;
+  getCards: (query: string) => void;
+  //handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
 
-  useEffect(() => {
-    queryRef.current = query;
-  }, [query]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchQuery', JSON.stringify(queryRef.current));
-    };
-  }, []);
-
+const SearchBar: FC<ISearchBar> = ({ query, setQuery, getCards }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    getCards(query);
   };
 
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
