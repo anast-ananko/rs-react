@@ -3,10 +3,14 @@ import SearchBar from '../SearchBar';
 import CardList from '../CardList';
 import useFetch from '../../hooks/fetch';
 
+import Modal from '../Modal';
+
 import './home.scss';
 
 const Home: FC = () => {
   const [cardsList, setCardsList] = useState([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [activeCardId, setActiveCardId] = useState<number>();
   const { request, error, isLoading } = useFetch();
 
   const queryObj = localStorage.getItem('searchQuery');
@@ -37,7 +41,6 @@ const Home: FC = () => {
         );
         if (cards) {
           setCardsList(cards.results);
-          console.log(cards.results);
         } else {
           throw new Error('Failed');
         }
@@ -47,7 +50,6 @@ const Home: FC = () => {
         );
         if (cards) {
           setCardsList(cards.results);
-          console.log(cards.results);
         } else {
           throw new Error('Failed');
         }
@@ -59,9 +61,12 @@ const Home: FC = () => {
     <div className="home">
       <h3 className="home__title">Home</h3>
       <SearchBar query={query} setQuery={setQuery} getCards={getCards} />
-      {isLoading && <div>Loading.....</div>}
-      {cardsList && <CardList cards={cardsList} />}
-      {error && <div>{error}</div>}
+      {isLoading && <div className="home__loading"></div>}
+      {cardsList && (
+        <CardList cards={cardsList} setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
+      )}
+      {error && <div className="home__error">{error}</div>}
+      <Modal onClose={() => setShowModal(false)} show={showModal} activeCardId={activeCardId} />
     </div>
   );
 };

@@ -15,8 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    
+    text-align: center;    
 }
 
 .card__image {
@@ -38,4 +37,5 @@
 .card__name {
     font-size: 24px;
     margin: 5px;
+    font-weight: 500;
 }

@@ -4,11 +4,18 @@ import { ISearchCards } from '../../interfaces/searchCard';
 
 import './cardList.scss';
 
-const CardList: FC<ISearchCards> = ({ cards }) => {
+const CardList: FC<ISearchCards> = ({ cards, setShowModal, setActiveCardId }) => {
   return (
     <div className="cards__list">
       {cards.map((card) => {
-        return <CardListItem key={card.id} card={card} />;
+        return (
+          <CardListItem
+            key={card.id}
+            card={card}
+            setShowModal={setShowModal}
+            setActiveCardId={setActiveCardId}
+          />
+        );
       })}
     </div>
   );

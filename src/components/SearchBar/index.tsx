@@ -6,7 +6,6 @@ interface ISearchBar {
   query: string;
   setQuery: (query: string) => void;
   getCards: (query: string) => void;
-  //handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const SearchBar: FC<ISearchBar> = ({ query, setQuery, getCards }) => {
