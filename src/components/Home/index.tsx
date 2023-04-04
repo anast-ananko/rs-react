@@ -26,6 +26,7 @@ const Home: FC = () => {
 
   useEffect(() => {
     getCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCards = async () => {
@@ -36,6 +37,7 @@ const Home: FC = () => {
         );
         if (cards) {
           setCardsList(cards.results);
+          console.log(cards.results);
         } else {
           throw new Error('Failed');
         }
@@ -45,6 +47,7 @@ const Home: FC = () => {
         );
         if (cards) {
           setCardsList(cards.results);
+          console.log(cards.results);
         } else {
           throw new Error('Failed');
         }
