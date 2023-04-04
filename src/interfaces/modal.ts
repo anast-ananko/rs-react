@@ -1,5 +1,5 @@
 export interface IModal {
   onClose: () => void;
-  show: boolean;
+  showModal: boolean;
   activeCardId: number | undefined;
 }

@@ -1,12 +1,8 @@
 import React, { FC } from 'react';
 
-import './searchBar.scss';
+import { ISearchBar } from 'interfaces/searchBar';
 
-interface ISearchBar {
-  query: string;
-  setQuery: (query: string) => void;
-  getCards: (query: string) => void;
-}
+import './searchBar.scss';
 
 const SearchBar: FC<ISearchBar> = ({ query, setQuery, getCards }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

@@ -8,7 +8,7 @@ import { IModalCard, IGenre } from 'interfaces/modalCard';
 
 import './modal.scss';
 
-const Modal: FC<IModal> = ({ onClose, show, activeCardId }) => {
+const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
   const [activeCard, setActiveCard] = useState<IModalCard>();
   const { request, error, isLoading } = useFetch();
 
@@ -19,7 +19,7 @@ const Modal: FC<IModal> = ({ onClose, show, activeCardId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCardId]);
 
-  const getCard = async () => {
+  const getCard = async (): Promise<void> => {
     const card = await request(
       `https://api.themoviedb.org/3/movie/${activeCardId}?api_key=44a088ecb314cffa890360d57d5748b9`
     );
@@ -27,7 +27,7 @@ const Modal: FC<IModal> = ({ onClose, show, activeCardId }) => {
   };
 
   return ReactDOM.createPortal(
-    <div className={`modal${show ? ' show' : ''}`} onClick={onClose}>
+    <div className={`modal${showModal ? ' show' : ''}`} onClick={onClose}>
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <i className="fa-solid fa-x" onClick={onClose}></i>
         {isLoading && <div className="home__loading"></div>}
