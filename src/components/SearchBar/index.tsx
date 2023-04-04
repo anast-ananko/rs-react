@@ -12,6 +12,7 @@ const SearchBar: FC<ISearchBar> = ({ query, setQuery, getCards }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     getCards(query);
+    localStorage.setItem('searchQuery', JSON.stringify(query));
   };
 
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import SearchBar from '../SearchBar';
 import CardList from '../CardList';
 import useFetch from '../../hooks/fetch';
@@ -16,17 +16,6 @@ const Home: FC = () => {
   const queryObj = localStorage.getItem('searchQuery');
   const queryParseObj = queryObj ? JSON.parse(queryObj) : '';
   const [query, setQuery] = useState<string>(queryParseObj);
-  const queryRef = useRef<string | undefined>();
-
-  useEffect(() => {
-    queryRef.current = query;
-  }, [query]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchQuery', JSON.stringify(queryRef.current));
-    };
-  }, []);
 
   useEffect(() => {
     getCards();
@@ -35,7 +24,7 @@ const Home: FC = () => {
 
   const getCards = async () => {
     try {
-      if (!queryRef.current) {
+      if (!query) {
         const cards = await request(
           'https://api.themoviedb.org/3/movie/popular?api_key=44a088ecb314cffa890360d57d5748b9&page=1'
         );
@@ -46,7 +35,7 @@ const Home: FC = () => {
         }
       } else {
         const cards = await request(
-          `https://api.themoviedb.org/3/search/movie?api_key=44a088ecb314cffa890360d57d5748b9&page=1&query=${queryRef.current}`
+          `https://api.themoviedb.org/3/search/movie?api_key=44a088ecb314cffa890360d57d5748b9&page=1&query=${query}`
         );
         if (cards) {
           setCardsList(cards.results);
