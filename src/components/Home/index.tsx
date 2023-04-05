@@ -25,24 +25,21 @@ const Home: FC = () => {
   }, []);
 
   const getCards = async (): Promise<void> => {
+    let cards: IResponce;
     try {
       if (!query) {
-        const cards: IResponce = await request(
+        cards = await request(
           'https://api.themoviedb.org/3/movie/popular?api_key=44a088ecb314cffa890360d57d5748b9&page=1'
         );
-        if (!cards) {
-          throw new Error('Failed');
-        }
-        setCardsList(cards.results);
       } else {
-        const cards: IResponce = await request(
+        cards = await request(
           `https://api.themoviedb.org/3/search/movie?api_key=44a088ecb314cffa890360d57d5748b9&page=1&query=${query}`
         );
-        if (!cards) {
-          throw new Error('Failed');
-        }
-        setCardsList(cards.results);
       }
+      if (!cards) {
+        throw new Error('Failed');
+      }
+      setCardsList(cards.results);
     } catch {}
   };
 

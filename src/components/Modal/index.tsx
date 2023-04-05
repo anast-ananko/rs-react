@@ -10,6 +10,7 @@ import './modal.scss';
 
 const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
   const [activeCard, setActiveCard] = useState<IModalCard>();
+
   const { request, error, isLoading } = useFetch();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
   }, [activeCardId]);
 
   const getCard = async (): Promise<void> => {
-    const card = await request(
+    const card: IModalCard = await request(
       `https://api.themoviedb.org/3/movie/${activeCardId}?api_key=44a088ecb314cffa890360d57d5748b9`
     );
     setActiveCard(card);
