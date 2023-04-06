@@ -44,7 +44,7 @@ const Home: FC = () => {
   };
 
   return (
-    <div className="home">
+    <div className="home" id="home" data-testid="home">
       <h3 className="home__title">Home</h3>
       <SearchBar query={query} setQuery={setQuery} getCards={getCards} />
       {isLoading && <div className="home__loading"></div>}

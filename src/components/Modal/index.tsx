@@ -1,5 +1,5 @@
 import React, { useState, FC, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import useFetch from '../../hooks/fetch';
 import noImage from '../../assets/No_Image_Available.jpg';
@@ -27,9 +27,9 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
     setActiveCard(card);
   };
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div className={`modal${showModal ? ' show' : ''}`} onClick={onClose}>
-      <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal__content" data-testid="modal" onClick={(e) => e.stopPropagation()}>
         <i className="fa-solid fa-x" onClick={onClose}></i>
         {isLoading && <div className="home__loading"></div>}
         {activeCard && (

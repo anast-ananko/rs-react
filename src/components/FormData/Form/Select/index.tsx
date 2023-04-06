@@ -9,6 +9,7 @@ const Select = ({ register, errors }: Pick<IInput, 'register' | 'errors'>) => (
     </label>
     <select
       id="color"
+      data-testid="color"
       {...register('color', {
         required: 'Color is required',
       })}
