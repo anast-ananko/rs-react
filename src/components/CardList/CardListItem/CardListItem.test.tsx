@@ -14,7 +14,7 @@ describe('CardListItem', () => {
     const { getByAltText, getByText } = render(
       <CardListItem card={card} setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
     );
-    expect(getByAltText(card.poster_path)).toBeInTheDocument();
+    expect(getByAltText(card.title)).toBeInTheDocument();
     expect(getByText(card.title)).toBeInTheDocument();
   });
 });

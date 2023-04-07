@@ -43,7 +43,7 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
                         ? `https://image.tmdb.org/t/p/w300/${activeCard.poster_path}`
                         : noImage
                     }
-                    alt=""
+                    alt={activeCard.poster_path ? activeCard.title : 'noImage'}
                     className="modal__img"
                   />
                 </div>

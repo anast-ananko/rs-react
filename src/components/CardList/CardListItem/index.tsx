@@ -13,7 +13,7 @@ const CardListItem: FC<ICardListItem> = ({ card, setShowModal, setActiveCardId }
       <div className="card__image">
         <img
           src={card.poster_path ? `https://image.tmdb.org/t/p/w300/${card.poster_path}` : noImage}
-          alt={card.poster_path}
+          alt={card.poster_path ? card.title : 'noImage'}
           className="card__img"
         />
       </div>
