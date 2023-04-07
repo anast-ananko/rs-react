@@ -8,7 +8,7 @@ const useFetch = () => {
     try {
       const responce = await fetch(url);
       if (!responce.ok) {
-        throw new Error('Failed fetch');
+        throw new Error('Failed to fetch');
       }
       const data = await responce.json();
       setError('');

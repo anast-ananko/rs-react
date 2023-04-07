@@ -53,6 +53,6 @@ describe('UseFetch', () => {
     rerender();
 
     expect(result.current.isLoading).toBe(false);
-    expect(result.current.error).toBe('Failed fetch');
+    expect(result.current.error).toBe('Failed to fetch');
   });
 });
