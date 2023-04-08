@@ -18,11 +18,16 @@
 .modal.show {
 	opacity: 1;
 	pointer-events: visible;
+    overflow: hidden;
 
 	.modal__content {
 		transform: translateY(0);		
 	}
 }
+
+body:last-child:has(.show) {
+    overflow: hidden;
+} 
 
 .modal__content {
     position: relative;
