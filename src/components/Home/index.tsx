@@ -47,11 +47,15 @@ const Home: FC = () => {
     <div className="home" id="home" data-testid="home">
       <h3 className="home__title">Home</h3>
       <SearchBar query={query} setQuery={setQuery} getCards={getCards} />
-      {isLoading && <div className="home__loading"></div>}
+      {isLoading && <div data-testid="home-loading" className="home__loading"></div>}
       {cardsList && (
         <CardList cards={cardsList} setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
       )}
-      {error && <div className="home__error">{error}</div>}
+      {error && (
+        <div className="home__error" data-testid="home__error">
+          {error}
+        </div>
+      )}
       <Modal
         onClose={() => setShowModal(false)}
         showModal={showModal}

@@ -7,7 +7,7 @@ import './searchBar.scss';
 const SearchBar: FC<ISearchBar> = ({ query, setQuery, getCards }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    getCards(query);
+    getCards();
     localStorage.setItem('searchQuery', JSON.stringify(query));
   };
 

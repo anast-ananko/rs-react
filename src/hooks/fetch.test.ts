@@ -1,8 +1,9 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { afterEach } from 'vitest';
 
+import { IResponce } from '../interfaces/responce';
 import useFetch from './fetch';
 
 describe('UseFetch', () => {
@@ -27,18 +28,24 @@ describe('UseFetch', () => {
   afterAll(() => server.close());
   afterEach(() => server.resetHandlers());
 
+  let data: IResponce;
+
   it('initial data state is loading and no error', async () => {
     const { result } = renderHook(() => useFetch());
 
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.error).toBe('');
+    await act(async () => {
+      expect(result.current.isLoading).toBe(true);
+      expect(result.current.error).toBe('');
+    });
   });
 
   it('data is fetched and not loading, no error', async () => {
     const { result, rerender } = renderHook(() => useFetch());
 
-    const data = await result.current.request('https://api.themoviedb.org/3/movie/popular');
-    rerender();
+    await act(async () => {
+      data = await result.current.request('https://api.themoviedb.org/3/movie/popular');
+      rerender();
+    });
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe('');
@@ -49,8 +56,10 @@ describe('UseFetch', () => {
   it('data is not fetched and not loading, error', async () => {
     const { result, rerender } = renderHook(() => useFetch());
 
-    await result.current.request('https://api.themoviedb.org/3/movie/popular/wrong');
-    rerender();
+    await act(async () => {
+      await result.current.request('https://api.themoviedb.org/3/movie/popular/wrong');
+      rerender();
+    });
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe('Failed to fetch');

@@ -1,6 +1,5 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react';
-import { render, cleanup } from '@testing-library/react';
+import { renderHook, act, render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -8,6 +7,7 @@ import { afterEach, vi } from 'vitest';
 
 import Modal from '.';
 import useFetch from '../../hooks/fetch';
+import { IModalCard } from '../../interfaces/modalCard';
 
 describe('Modal', () => {
   const server = setupServer(
@@ -60,24 +60,32 @@ describe('Modal', () => {
     activeCardId: 1,
   };
 
+  let data: IModalCard;
+
   it('renders the modal when show is true', async () => {
     const { queryByTestId } = render(<Modal {...props} />);
 
-    expect(queryByTestId('modal')).toBeInTheDocument();
+    act(() => {
+      expect(queryByTestId('modal')).toBeInTheDocument();
+    });
   });
 
   it('does not render the modal when show is false', () => {
     const { queryByTestId } = render(<Modal {...props} showModal={false} />);
 
-    expect(queryByTestId('modal')).not.toBeInTheDocument();
+    act(() => {
+      expect(queryByTestId('modal')).not.toBeInTheDocument();
+    });
   });
 
   it('fetches the card and render card with data', async () => {
     const { result, rerender } = renderHook(() => useFetch());
     const { findByText, findByAltText } = render(<Modal {...props} />);
 
-    const data = await result.current.request('https://api.themoviedb.org/3/movie/1');
-    rerender();
+    await act(async () => {
+      data = await result.current.request('https://api.themoviedb.org/3/movie/1');
+      rerender();
+    });
 
     expect(data.poster_path).toBe('https://image.tmdb.org/t/p/w300/image.jpg');
     expect(data.title).toBe('Mocked Movie Title 1');
@@ -100,8 +108,10 @@ describe('Modal', () => {
     const { result, rerender } = renderHook(() => useFetch());
     const { findByText, findByAltText } = render(<Modal {...props} activeCardId={2} />);
 
-    const data = await result.current.request('https://api.themoviedb.org/3/movie/2');
-    rerender();
+    await act(async () => {
+      data = await result.current.request('https://api.themoviedb.org/3/movie/2');
+      rerender();
+    });
 
     expect(data.poster_path).toBe('');
     expect(data.title).toBe('Mocked Movie Title 2');
@@ -125,7 +135,6 @@ describe('Modal', () => {
 
     expect(getByTestId('modal')).toBeInTheDocument();
     await userEvent.click(getByTestId('close'));
-
     expect(props.onClose).toBeCalledTimes(1);
   });
 });
