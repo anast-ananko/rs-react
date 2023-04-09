@@ -59,6 +59,7 @@ describe('Home', () => {
 
   it('should show the list of cards when there is data available', async () => {
     const { getAllByTestId } = render(<Home />);
+
     await waitFor(() => {
       expect(getAllByTestId('card').length).toBe(2);
     });
@@ -69,6 +70,7 @@ describe('Home', () => {
 
     fireEvent.change(getByPlaceholderText(/search.../i), { target: { value: 'Matrix' } });
     fireEvent.submit(getByTestId('form'));
+
     await waitFor(() => {
       const cards = getAllByTestId('card');
       expect(cards).toHaveLength(2);

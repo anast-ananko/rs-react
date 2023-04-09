@@ -6,6 +6,7 @@ const useFetch = () => {
 
   const request = useCallback(async (url: string) => {
     try {
+      setIsLoading(true);
       const responce = await fetch(url);
       if (!responce.ok) {
         throw new Error('Failed to fetch');

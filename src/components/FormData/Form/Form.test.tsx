@@ -10,7 +10,7 @@ describe('Form', () => {
     const addCard = vi.fn();
     const { findByText, getByText } = render(<Form addCard={addCard} />);
 
-    userEvent.click(getByText(/submit/i));
+    await userEvent.click(getByText(/submit/i));
 
     expect(await findByText(/title is required/i)).toBeInTheDocument();
     expect(await findByText(/date is required/i)).toBeInTheDocument();

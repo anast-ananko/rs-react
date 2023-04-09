@@ -14,6 +14,7 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
   const { request, error, isLoading } = useFetch();
 
   useEffect(() => {
+    setActiveCard(undefined);
     if (activeCardId) {
       getCard();
     }

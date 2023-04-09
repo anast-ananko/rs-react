@@ -52,6 +52,7 @@ const Home: FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    setCardsList([]);
     if (query) {
       getCards();
     } else {

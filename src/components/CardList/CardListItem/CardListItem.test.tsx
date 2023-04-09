@@ -20,6 +20,7 @@ describe('CardListItem', () => {
     const { getByAltText, getByText } = render(
       <CardListItem card={card1} setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
     );
+
     expect(getByAltText(card1.title)).toBeInTheDocument();
     expect(getByText(card1.title)).toBeInTheDocument();
   });
@@ -30,6 +31,7 @@ describe('CardListItem', () => {
     );
     const card = getByTestId('card');
     fireEvent.click(card);
+
     expect(setShowModal).toHaveBeenCalledWith(true);
     expect(setActiveCardId).toHaveBeenCalledWith(1);
   });
