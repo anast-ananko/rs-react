@@ -1,19 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
-import { ISearchBar } from 'interfaces/searchBar';
+import { useAppDispatch, useAppSelector } from '../../hook';
+import { valueSetted } from '../Home/homeSlice';
+import { ISearchBar } from '../../interfaces/searchBar';
 
 import './searchBar.scss';
 
-const SearchBar: FC<ISearchBar> = ({ query, setQuery, handleSubmit }) => {
+const SearchBar: FC<ISearchBar> = ({ handleSubmit }) => {
+  const { query } = useAppSelector((state) => state.home);
+  const [inputQuery, setInputQuery] = useState<string>(query);
+
+  const dispatch = useAppDispatch();
+
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setQuery(e.target.value);
+    setInputQuery(e.target.value);
+    dispatch(valueSetted(e.target.value));
   };
 
   return (
     <form data-testid="form" className="search" onSubmit={handleSubmit}>
       <div className="search__input">
         <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
-        <input type="text" value={query} onChange={handleQuery} placeholder="Search..." />
+        <input type="text" value={inputQuery} onChange={handleQuery} placeholder="Search..." />
       </div>
       <button data-testid="search__button" className="search__button" type="submit">
         Search

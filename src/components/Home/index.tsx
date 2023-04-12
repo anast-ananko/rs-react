@@ -1,82 +1,63 @@
 import React, { FC, useEffect, useState } from 'react';
 
+import { useAppDispatch, useAppSelector } from '../../hook';
 import SearchBar from '../SearchBar';
 import CardList from '../CardList';
-import useFetch from '../../hooks/fetch';
 import Modal from '../Modal';
-import { ISearchCard } from 'interfaces/searchCard';
-import { IResponce } from 'interfaces/responce';
+import { ISearchCard } from '../../interfaces/searchCard';
+import { fetchAllCards, fetchCardsWithQuery } from './homeSlice';
 
 import './home.scss';
 
 const Home: FC = () => {
-  const [cardsList, setCardsList] = useState<ISearchCard[]>([]);
+  const { cardsLoadingStatus, query, cards } = useAppSelector((state) => state.home);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [activeCardId, setActiveCardId] = useState<number>();
-  const [isNoResults, setIsNoResults] = useState<boolean>(false);
 
-  const { request, error, isLoading } = useFetch();
-
-  const searchQuery = localStorage.getItem('searchQuery');
-  const [query, setQuery] = useState<string>(searchQuery ? JSON.parse(searchQuery) : '');
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (query) {
-      getCards();
+      dispatch(fetchCardsWithQuery(query));
     } else {
-      getAllCards();
+      dispatch(fetchAllCards());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getAllCards = async (): Promise<void> => {
-    const cards: IResponce = await request(
-      'https://api.themoviedb.org/3/movie/popular?api_key=44a088ecb314cffa890360d57d5748b9&page=1'
-    );
-    setCardsList(cards.results);
-  };
-
-  const getCards = async (): Promise<void> => {
-    const cards: IResponce = await request(
-      `https://api.themoviedb.org/3/search/movie?api_key=44a088ecb314cffa890360d57d5748b9&page=1&query=${query}`
-    );
-    if (cards.results.length === 0) {
-      setIsNoResults(true);
-      setCardsList([]);
-      localStorage.setItem('searchQuery', JSON.stringify(query));
-    } else {
-      setIsNoResults(false);
-      setCardsList(cards.results);
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    setCardsList([]);
     if (query) {
-      getCards();
+      dispatch(fetchCardsWithQuery(query));
     } else {
-      getAllCards();
+      dispatch(fetchAllCards());
     }
-    localStorage.setItem('searchQuery', JSON.stringify(query));
   };
+
+  const renderCardsList = (arr: ISearchCard[]) => {
+    if (arr.length === 0 && cardsLoadingStatus === 'idle') {
+      return (
+        <div className="home__no-results" data-testid="no-results">
+          No results
+        </div>
+      );
+    }
+    return <CardList setShowModal={setShowModal} setActiveCardId={setActiveCardId} />;
+  };
+
+  const elements = renderCardsList(cards);
 
   return (
     <div className="home" id="home" data-testid="home">
       <h3 className="home__title">Home</h3>
-      <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
-      {isLoading && <div data-testid="home-loading" className="home__loading"></div>}
-      {isNoResults && (
-        <div className="home__no-results" data-testid="no-results">
-          No results
-        </div>
+      <SearchBar handleSubmit={handleSubmit} />
+      {cardsLoadingStatus === 'loading' && (
+        <div data-testid="home-loading" className="home__loading"></div>
       )}
-      {cardsList && (
-        <CardList cards={cardsList} setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
-      )}
-      {error && (
+      {elements}
+      {cardsLoadingStatus === 'error' && (
         <div className="home__error" data-testid="home__error">
-          {error}
+          Failed to fetch
         </div>
       )}
       <Modal
