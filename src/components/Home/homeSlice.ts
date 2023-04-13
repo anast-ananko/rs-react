@@ -1,17 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import usefetch from '../../hooks/fetch';
-import { ISearchCard } from '../../interfaces/searchCard';
+import { IHomeState } from '../../interfaces/homeState';
 import { IModalCard } from '../../interfaces/modalCard';
 import { IResponce } from '../../interfaces/responce';
-
-interface IHomeState {
-  cards: ISearchCard[];
-  cardsLoadingStatus: 'idle' | 'loading' | 'error';
-  query: string;
-  card: IModalCard | undefined;
-  cardLoadingStatus: 'idle' | 'loading' | 'error';
-}
 
 const initialState: IHomeState = {
   cards: [],
@@ -55,7 +47,7 @@ const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    valueSetted: (state, action: PayloadAction<string>) => {
+    setValue: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
   },
@@ -101,4 +93,4 @@ const homeSlice = createSlice({
 const { actions, reducer } = homeSlice;
 
 export default reducer;
-export const { valueSetted } = actions;
+export const { setValue } = actions;

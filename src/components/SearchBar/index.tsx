@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hook';
-import { valueSetted } from '../Home/homeSlice';
+import { setValue } from '../Home/homeSlice';
 import { ISearchBar } from '../../interfaces/searchBar';
 
 import './searchBar.scss';
@@ -14,7 +14,7 @@ const SearchBar: FC<ISearchBar> = ({ handleSubmit }) => {
 
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputQuery(e.target.value);
-    dispatch(valueSetted(e.target.value));
+    dispatch(setValue(e.target.value));
   };
 
   return (
