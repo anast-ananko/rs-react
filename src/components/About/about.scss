@@ -1,0 +1,11 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.about__title {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
