@@ -1,20 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../hook';
-import { setValue } from '../Home/homeSlice';
 import { ISearchBar } from '../../interfaces/searchBar';
 
 import './searchBar.scss';
 
-const SearchBar: FC<ISearchBar> = ({ handleSubmit }) => {
-  const { query } = useAppSelector((state) => state.home);
-  const [inputQuery, setInputQuery] = useState<string>(query);
-
-  const dispatch = useAppDispatch();
-
+const SearchBar: FC<ISearchBar> = ({ inputQuery, setInputQuery, handleSubmit }) => {
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputQuery(e.target.value);
-    dispatch(setValue(e.target.value));
   };
 
   return (

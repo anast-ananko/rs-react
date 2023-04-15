@@ -17,12 +17,18 @@ describe('SearchBar', () => {
   useAppSelector.mockReturnValue({ home: { query } });
   useAppDispatch.mockResolvedValue(vi.fn());
 
+  const inputQuery = 'test';
+  const setInputQuery = vi.fn();
   const handleSubmit = vi.fn();
 
   it('should render input and button', () => {
     const { getByTestId, getByPlaceholderText } = render(
       <Provider store={store}>
-        <SearchBar handleSubmit={handleSubmit} />
+        <SearchBar
+          inputQuery={inputQuery}
+          setInputQuery={setInputQuery}
+          handleSubmit={handleSubmit}
+        />
       </Provider>
     );
 
@@ -34,7 +40,11 @@ describe('SearchBar', () => {
   it('should call handleSubmit function when form is submitted', () => {
     const { getByTestId } = render(
       <Provider store={store}>
-        <SearchBar handleSubmit={handleSubmit} />
+        <SearchBar
+          inputQuery={inputQuery}
+          setInputQuery={setInputQuery}
+          handleSubmit={handleSubmit}
+        />
       </Provider>
     );
 
@@ -46,7 +56,11 @@ describe('SearchBar', () => {
   it('should update the query state when input is changed', () => {
     const { getByPlaceholderText } = render(
       <Provider store={store}>
-        <SearchBar handleSubmit={handleSubmit} />
+        <SearchBar
+          inputQuery={inputQuery}
+          setInputQuery={setInputQuery}
+          handleSubmit={handleSubmit}
+        />
       </Provider>
     );
 
