@@ -1,5 +1,5 @@
 export interface ISearchBar {
-  query: string;
-  setQuery: (query: string) => void;
+  inputQuery: string;
+  setInputQuery: (query: string) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }

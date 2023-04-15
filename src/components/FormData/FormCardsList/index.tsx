@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 
-import { ICards } from '../../../interfaces/card';
+import { useAppSelector } from '../../../hook';
 
-const FormCardsList: FC<ICards> = ({ cards }) => {
+const FormCardsList: FC = () => {
+  const { cards } = useAppSelector((state) => state.form);
+
   return (
     <div className="form-cards__list" data-testid="cards-list">
       {cards &&

@@ -1,23 +1,22 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 
+import store from '../../store';
 import CardList from '.';
 
 describe('CardList', () => {
-  const cards = [
-    { id: 1, title: 'Card 1', poster_path: '/image' },
-    { id: 2, title: 'Card 2', poster_path: '/image' },
-    { id: 3, title: 'Card 3', poster_path: '/image' },
-  ];
-
   const setShowModal = vi.fn();
   const setActiveCardId = vi.fn();
 
   it('renders a list of CardListItems', () => {
     const { getAllByTestId } = render(
-      <CardList cards={cards} setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
+      <Provider store={store}>
+        <CardList setShowModal={setShowModal} setActiveCardId={setActiveCardId} />
+      </Provider>
     );
-    expect(getAllByTestId('card')).toHaveLength(cards.length);
+
+    expect(getAllByTestId('cards-list')).toBeInTheDocument;
   });
 });

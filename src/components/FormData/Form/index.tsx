@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { IForm } from '../../../interfaces/form';
+import { useAppDispatch, useAppSelector } from '../../../hook';
 import { IFormData } from '../../../interfaces/formData';
 import InputText from './InputText';
 import InputDate from './InputDate';
@@ -9,9 +9,22 @@ import Select from './Select';
 import InputRadio from './InputRadio';
 import InputCheckbox from './InputCheckbox';
 import InputFile from './InputFile';
+import { addCard, clearAllFields } from '../formSlice';
 
-const Form: FC<IForm> = ({ addCard }) => {
+const Form: FC = () => {
+  const { title, date, color, size, gift } = useAppSelector((state) => state.form);
   const [formIsValid, setFormIsValid] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+
+  const defaultFormValues: IFormData = {
+    title: title,
+    date: date,
+    color: color,
+    size: size,
+    gift: gift,
+    image: undefined,
+  };
 
   const {
     register,
@@ -19,21 +32,26 @@ const Form: FC<IForm> = ({ addCard }) => {
     formState: { errors },
     getValues,
     reset,
-  } = useForm<IFormData>({ reValidateMode: 'onSubmit' });
+    setValue,
+  } = useForm<IFormData>({ reValidateMode: 'onSubmit', defaultValues: defaultFormValues });
 
-  const onSubmit = (data: IFormData) => {
+  const onSubmit = (data: IFormData): void => {
     setFormIsValid(true);
     setTimeout(() => setFormIsValid(false), 5000);
-    const newCard = {
-      title: data.title,
-      date: data.date,
-      color: data.color,
-      size: data.size,
-      gift: data.gift.join(' '),
-      image: URL.createObjectURL(data.image[0]),
-    };
-    reset();
-    addCard(newCard);
+    if (data.image) {
+      const newCard = {
+        title: data.title,
+        date: data.date,
+        color: data.color,
+        size: data.size,
+        gift: data.gift.join(' '),
+        image: URL.createObjectURL(data.image[0]),
+      };
+      dispatch(addCard(newCard));
+    }
+    setValue('image', undefined);
+    reset({ title: '', date: '', color: '', size: '', gift: [] });
+    dispatch(clearAllFields());
   };
 
   return (

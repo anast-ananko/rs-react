@@ -3,11 +3,15 @@ import { renderHook, act, render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import { Provider } from 'react-redux';
 import { afterEach, vi } from 'vitest';
 
 import Modal from '.';
 import useFetch from '../../hooks/fetch';
 import { IModalCard } from '../../interfaces/modalCard';
+import store from '../../store';
+
+vi.mock('../../../hook');
 
 describe('Modal', () => {
   const server = setupServer(
@@ -60,10 +64,32 @@ describe('Modal', () => {
     activeCardId: 1,
   };
 
+  const card = {
+    id: 1,
+    poster_path: 'https://example.com/image1',
+    title: 'Card 1',
+    release_date: '01/01/2022',
+    genres: ['Comedy'],
+    runtime: 120,
+    overview: 'Description',
+  };
+
+  const cardLoadingStatus = 'loading';
+
+  const useAppSelector = vi.fn();
+  const useAppDispatch = vi.fn();
+
+  useAppSelector.mockReturnValue({ card, cardLoadingStatus });
+  useAppDispatch.mockResolvedValue(vi.fn());
+
   let data: IModalCard;
 
   it('renders the modal when show is true', async () => {
-    const { queryByTestId } = render(<Modal {...props} />);
+    const { queryByTestId } = render(
+      <Provider store={store}>
+        <Modal {...props} />
+      </Provider>
+    );
 
     act(() => {
       expect(queryByTestId('modal')).toBeInTheDocument();
@@ -71,7 +97,11 @@ describe('Modal', () => {
   });
 
   it('does not render the modal when show is false', () => {
-    const { queryByTestId } = render(<Modal {...props} showModal={false} />);
+    const { queryByTestId } = render(
+      <Provider store={store}>
+        <Modal {...props} showModal={false} />
+      </Provider>
+    );
 
     act(() => {
       expect(queryByTestId('modal')).not.toBeInTheDocument();
@@ -80,7 +110,11 @@ describe('Modal', () => {
 
   it('fetches the card and render card with data', async () => {
     const { result, rerender } = renderHook(() => useFetch());
-    const { findByText, findByAltText } = render(<Modal {...props} />);
+    const { findByText, findByAltText } = render(
+      <Provider store={store}>
+        <Modal {...props} />
+      </Provider>
+    );
 
     await act(async () => {
       data = await result.current.request('https://api.themoviedb.org/3/movie/1');
@@ -106,7 +140,11 @@ describe('Modal', () => {
   it('fetches the card and render card with data, no image and no duration', async () => {
     cleanup();
     const { result, rerender } = renderHook(() => useFetch());
-    const { findByText, findByAltText } = render(<Modal {...props} activeCardId={2} />);
+    const { findByText, findByAltText } = render(
+      <Provider store={store}>
+        <Modal {...props} activeCardId={2} />
+      </Provider>
+    );
 
     await act(async () => {
       data = await result.current.request('https://api.themoviedb.org/3/movie/2');
@@ -131,7 +169,11 @@ describe('Modal', () => {
   });
 
   it('modal shows the children and a close button', async () => {
-    const { getByTestId } = render(<Modal {...props} />);
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Modal {...props} />
+      </Provider>
+    );
 
     expect(getByTestId('modal')).toBeInTheDocument();
     await userEvent.click(getByTestId('close'));

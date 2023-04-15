@@ -1,33 +1,71 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 
+import store from '../../store';
 import SearchBar from '.';
 
-describe('SearchBar', () => {
-  afterEach(() => {
-    cleanup();
-  });
+vi.mock('../../../hook');
 
-  const query = '';
-  const setQuery = vi.fn();
+describe('SearchBar', () => {
+  const query = 'test';
+
+  const useAppSelector = vi.fn();
+  const useAppDispatch = vi.fn();
+
+  useAppSelector.mockReturnValue({ home: { query } });
+  useAppDispatch.mockResolvedValue(vi.fn());
+
+  const inputQuery = 'test';
+  const setInputQuery = vi.fn();
   const handleSubmit = vi.fn();
 
   it('should render input and button', () => {
-    const { getByRole } = render(
-      <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+    const { getByTestId, getByPlaceholderText } = render(
+      <Provider store={store}>
+        <SearchBar
+          inputQuery={inputQuery}
+          setInputQuery={setInputQuery}
+          handleSubmit={handleSubmit}
+        />
+      </Provider>
     );
 
-    expect(getByRole('textbox')).toBeInTheDocument();
-    expect(getByRole('button')).toBeInTheDocument();
+    expect(getByTestId('search__button')).toBeInTheDocument();
+    expect(getByTestId('form')).toContainElement(getByTestId('search__button'));
+    expect(getByTestId('form')).toContainElement(getByPlaceholderText(/search.../i));
   });
 
-  it('updates query when input value changes', async () => {
-    const { getByPlaceholderText } = render(
-      <SearchBar query={query} setQuery={setQuery} handleSubmit={handleSubmit} />
+  it('should call handleSubmit function when form is submitted', () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <SearchBar
+          inputQuery={inputQuery}
+          setInputQuery={setInputQuery}
+          handleSubmit={handleSubmit}
+        />
+      </Provider>
     );
 
-    fireEvent.change(getByPlaceholderText(/search.../i), { target: { value: 'Matrix' } });
-    expect(setQuery).toHaveBeenCalledWith('Matrix');
+    const form = getByTestId('form');
+    fireEvent.submit(form);
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  it('should update the query state when input is changed', () => {
+    const { getByPlaceholderText } = render(
+      <Provider store={store}>
+        <SearchBar
+          inputQuery={inputQuery}
+          setInputQuery={setInputQuery}
+          handleSubmit={handleSubmit}
+        />
+      </Provider>
+    );
+
+    const input = getByPlaceholderText(/search.../i);
+    fireEvent.change(input, { target: { value: 'test' } });
+    expect(input).toHaveValue('test');
   });
 });

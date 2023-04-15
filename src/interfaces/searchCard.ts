@@ -5,7 +5,6 @@ export interface ISearchCard {
 }
 
 export interface ISearchCards {
-  cards: ISearchCard[];
   setShowModal: (value: boolean) => void;
   setActiveCardId: (value: number) => void;
 }
