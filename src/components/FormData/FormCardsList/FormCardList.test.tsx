@@ -1,32 +1,59 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { vi } from 'vitest';
 
+import { useAppSelector } from '../../../hook';
+import store from '../../../store';
 import FormCardsList from '.';
 
+vi.mock('../../../hook');
+
 describe('FormCardsList', () => {
-  it('renders form cards list', () => {
-    const cards = [
-      {
-        title: 'Card 1',
-        date: '2022-01-01',
-        color: 'red',
-        size: 'small',
-        gift: 'card-1',
-        image: 'https://example.com/image1.jpg',
-      },
-      {
-        title: 'Card 2',
-        date: '2022-02-02',
-        color: 'blue',
-        size: 'medium',
-        gift: 'card-2',
-        image: 'https://example.com/image2.jpg',
-      },
-    ];
+  const cards = [
+    {
+      title: 'Card 1',
+      date: '01-01-2022',
+      color: 'red',
+      size: 'small',
+      gift: 'Postcard',
+      image: 'https://example.com/image1',
+    },
+    {
+      title: 'Card 2',
+      date: '02-02-2022',
+      color: 'blue',
+      size: 'medium',
+      gift: 'Trinket',
+      image: 'https://example.com/image2',
+    },
+  ];
 
-    const { getByTestId, getAllByTestId } = render(<FormCardsList cards={cards} />);
+  (useAppSelector as jest.Mock).mockReturnValue({ cards });
 
-    expect(getByTestId('cards-list')).toBeInTheDocument();
-    expect(getAllByTestId('form-card')).toHaveLength(cards.length);
+  it('renders list of cards correctly', () => {
+    const { getByTestId, getAllByTestId } = render(
+      <Provider store={store}>
+        <FormCardsList />
+      </Provider>
+    );
+
+    const cardsListElement = getByTestId('cards-list');
+    const cardsElements = getAllByTestId('form-card');
+
+    expect(cardsListElement).toBeInTheDocument();
+    expect(cardsElements).toHaveLength(2);
+
+    expect(cardsElements[0]).toHaveTextContent('Title: Card 1');
+    expect(cardsElements[0]).toHaveTextContent('Date: 01-01-2022');
+    expect(cardsElements[0]).toHaveTextContent('Color: red');
+    expect(cardsElements[0]).toHaveTextContent('Size: small');
+    expect(cardsElements[0]).toHaveTextContent('Gift: Postcard');
+
+    expect(cardsElements[1]).toHaveTextContent('Title: Card 2');
+    expect(cardsElements[1]).toHaveTextContent('Date: 02-02-2022');
+    expect(cardsElements[1]).toHaveTextContent('Color: blue');
+    expect(cardsElements[1]).toHaveTextContent('Size: medium');
+    expect(cardsElements[1]).toHaveTextContent('Gift: Trinket');
   });
 });

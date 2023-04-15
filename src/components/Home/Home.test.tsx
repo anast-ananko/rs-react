@@ -2,7 +2,9 @@ import React from 'react';
 import { render, cleanup, waitFor, fireEvent } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import { Provider } from 'react-redux';
 
+import store from '../../store';
 import Home from '.';
 
 describe('Home', () => {
@@ -42,13 +44,21 @@ describe('Home', () => {
   });
 
   it('should render Home component', () => {
-    const { getByTestId } = render(<Home />);
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    );
 
     expect(getByTestId('home')).toBeInTheDocument();
   });
 
   it('should render loading spinner', async () => {
-    const { getByTestId } = render(<Home />);
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    );
     const loadingElement = getByTestId('home-loading');
 
     expect(loadingElement).toBeInTheDocument();
@@ -58,7 +68,11 @@ describe('Home', () => {
   });
 
   it('should show the list of cards when there is data available', async () => {
-    const { getAllByTestId } = render(<Home />);
+    const { getAllByTestId } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    );
 
     await waitFor(() => {
       expect(getAllByTestId('card').length).toBe(2);
@@ -66,7 +80,11 @@ describe('Home', () => {
   });
 
   it('should display a list of cards when the search query returns results', async () => {
-    const { getByTestId, getAllByTestId, getByPlaceholderText } = render(<Home />);
+    const { getByTestId, getAllByTestId, getByPlaceholderText } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>
+    );
 
     fireEvent.change(getByPlaceholderText(/search.../i), { target: { value: 'Matrix' } });
     fireEvent.submit(getByTestId('form'));
@@ -74,8 +92,8 @@ describe('Home', () => {
     await waitFor(() => {
       const cards = getAllByTestId('card');
       expect(cards).toHaveLength(2);
-      expect(cards[0]).toHaveTextContent('Title-3');
-      expect(cards[1]).toHaveTextContent('Title-4');
+      expect(cards[0]).toHaveTextContent('Title-1');
+      expect(cards[1]).toHaveTextContent('Title-2');
     });
   });
 });

@@ -1,14 +1,20 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
 import { vi } from 'vitest';
+import * as actions from '../formSlice';
 
+import store from '../../../store';
 import Form from '.';
 
 describe('Form', () => {
   it('should show error messages for invalid data', async () => {
-    const addCard = vi.fn();
-    const { findByText, getByText } = render(<Form addCard={addCard} />);
+    const { findByText, getByText } = render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
 
     await userEvent.click(getByText(/submit/i));
 
@@ -21,9 +27,15 @@ describe('Form', () => {
   });
 
   it('should submit form data for valid data', async () => {
-    const addCard = vi.fn();
+    const mockedAddCard = vi.spyOn(actions, 'addCard');
+
     global.URL.createObjectURL = vi.fn(() => 'mock-file-url');
-    const { getByTestId, getByLabelText, getByText } = render(<Form addCard={addCard} />);
+
+    const { getByTestId, getByLabelText, getByText } = render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
 
     await userEvent.type(getByLabelText(/title/i), 'Title');
     await userEvent.type(getByLabelText(/date/i), '2022-01-01');
@@ -35,6 +47,6 @@ describe('Form', () => {
     await userEvent.upload(getByLabelText(/image/i), testImage);
 
     await userEvent.click(getByText(/submit/i));
-    expect(addCard).toHaveBeenCalledTimes(1);
+    expect(mockedAddCard).toHaveBeenCalledTimes(1);
   });
 });
