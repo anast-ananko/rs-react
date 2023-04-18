@@ -13,7 +13,13 @@
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "./src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true,
   },
-  "include": ["vite.config.ts", "./src/**/*", "styled.d.ts"]
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
+  },
+  "include": ["vite.config.ts", "./src/**/*", "styled.d.ts", "declaration.d.ts"]
 }

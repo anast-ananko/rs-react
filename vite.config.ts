@@ -15,4 +15,5 @@ export default defineConfig({
       provider: 'c8',
     },
   },
+  ssr: { noExternal: ['@reduxjs/toolkit'] },
 });
