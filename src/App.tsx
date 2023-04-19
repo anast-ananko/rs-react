@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import Home from './components/Home';
@@ -16,8 +16,7 @@ const App: FunctionComponent = () => {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="form" element={<FormData />}></Route>
-        <Route path="404" element={<NotFound />} />
-        <Route path="*" element={<Navigate to="404" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

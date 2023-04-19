@@ -15,6 +15,7 @@
     "baseUrl": "./src",
     "resolveJsonModule": true,
     "allowJs": true,
+    "outDir": "./dist",
   },
   "ts-node": {
     "esm": true,

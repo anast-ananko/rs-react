@@ -23,7 +23,7 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
 
   return createPortal(
     <>
-      {showModal && (
+      {showModal && typeof window !== 'undefined' && (
         <div className={`modal${showModal ? ' show' : ''}`} onClick={onClose}>
           <div className="modal__content" data-testid="modal" onClick={(e) => e.stopPropagation()}>
             <i className="fa-solid fa-x" onClick={onClose} data-testid="close"></i>

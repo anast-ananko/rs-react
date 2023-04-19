@@ -66,11 +66,11 @@ const Home: FC = () => {
           Failed to fetch
         </div>
       )}
-      <Modal
+      {/* <Modal
         onClose={() => setShowModal(false)}
         showModal={showModal}
         activeCardId={activeCardId}
-      />
+      /> */}
     </div>
   );
 };

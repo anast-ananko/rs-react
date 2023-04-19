@@ -16,30 +16,25 @@ const createServer = async () => {
     appType: 'custom',
   });
 
-  const isProd = process.env.NODE_ENV === 'production';
-
-  const entryServerPath = isProd ? './server/entry-server.js' : '/src/entry-server.tsx';
-  const { render } = isProd
-    ? await import(entryServerPath)
-    : await vite.ssrLoadModule(entryServerPath);
+  const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
 
   const html = fs.readFileSync(path.resolve(__dirname, './index.html')).toString();
   const parts = html.split('not rendered');
   app.use(vite.middlewares);
 
   app.use((req, res) => {
+    res.setHeader('Content-Type', 'text/html');
     res.write(parts[0]);
     const stream = render(req.originalUrl, {
-      bootstrapModules: ['./src/entry-client.tsx'],
+      // bootstrapModules: ['./src/entry-client.tsx'],
       onShellReady() {
-        res.setHeader('Content-Type', 'text/html');
         stream!.pipe(res);
       },
       onAllReady() {
         res.write(parts[1]);
         res.end();
       },
-      onError(err) {
+      onError(err: Error) {
         console.error(err);
       },
     });
