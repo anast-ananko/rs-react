@@ -4,15 +4,14 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
-    "target": "ESNext",
+    "jsx": "preserve",
+    "target": "ESNext"
   },
-  "extends": "./tsconfig.json",
   "include": [
-    "server.ts"
-  ],
-  "ts-node": {
-    "esm": true,
-    "transpileOnly": true,
-    "experimentalSpecifierResolution": "node"
-  }  
+    "src/**/*",
+    "vite.config.ts",
+    "src/entry-server.tsx",
+    "src/vite-env.d.ts",
+    "server.ts",
+  ]
 }

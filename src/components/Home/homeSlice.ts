@@ -4,6 +4,7 @@ import usefetch from '../../hooks/fetch';
 import { IHomeState } from '../../interfaces/homeState';
 import { IModalCard } from '../../interfaces/modalCard';
 import { IResponce } from '../../interfaces/responce';
+// import { ISearchCard } from '../../interfaces/searchCard';
 
 const initialState: IHomeState = {
   cards: [],
@@ -50,6 +51,9 @@ const homeSlice = createSlice({
     setValue: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
+    setCards: (state, action: PayloadAction<IResponce>) => {
+      state.cards = action.payload.results;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -93,4 +97,4 @@ const homeSlice = createSlice({
 const { actions, reducer } = homeSlice;
 
 export default reducer;
-export const { setValue } = actions;
+export const { setValue, setCards } = actions;

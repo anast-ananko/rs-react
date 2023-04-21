@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout';
@@ -9,7 +9,7 @@ import NotFound from './components/NotFound';
 
 import './App.scss';
 
-const App: FunctionComponent = () => {
+const App: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

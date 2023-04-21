@@ -4,7 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
-import store from './store';
+import createStore from './store';
+
+const store = createStore(window.__PRELOADED_STATE__);
+delete window.__PRELOADED_STATE__;
 
 hydrateRoot(
   document.getElementById('root') as HTMLElement,
