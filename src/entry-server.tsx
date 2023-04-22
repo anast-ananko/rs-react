@@ -6,14 +6,13 @@ import { Provider } from 'react-redux';
 import App from './App';
 import createStore from './store';
 import Page from './Page';
-import { IAssetMap } from './interfaces/assetMap';
 
-export function render(url: string, assetMap: IAssetMap, opts: RenderToPipeableStreamOptions) {
+export function render(url: string, opts: RenderToPipeableStreamOptions) {
   const store = createStore();
   const preloadedState = store.getState();
 
   const stream = renderToPipeableStream(
-    <Page styles={assetMap.styles} preloadedState={preloadedState}>
+    <Page preloadedState={preloadedState}>
       <Provider store={store}>
         <StaticRouter location={url}>
           <App />

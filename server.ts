@@ -19,7 +19,7 @@ export async function createServer() {
       const render = (await vite.ssrLoadModule('./src/entry-server.tsx')).render;
       const assetMap = { script: './src/entry-client.tsx' };
 
-      const stream = render(req.originalUrl, assetMap, {
+      const stream = render(req.originalUrl, {
         bootstrapModules: [assetMap.script],
         onShellReady() {
           stream!.pipe(res);

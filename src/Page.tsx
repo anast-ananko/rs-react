@@ -1,15 +1,6 @@
-import { PreloadedState } from '@reduxjs/toolkit';
-import { ReactNode } from 'react';
+import { IPage } from './interfaces/page';
 
-import { RootState } from './store';
-
-interface IPage {
-  styles: string;
-  preloadedState: PreloadedState<RootState>;
-  children: ReactNode;
-}
-
-const Page = ({ styles, preloadedState, children }: IPage) => {
+const Page = ({ preloadedState, children }: IPage) => {
   return (
     <html lang="en">
       <head>
@@ -34,7 +25,6 @@ const Page = ({ styles, preloadedState, children }: IPage) => {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         ></link>
-        {styles && <link rel="stylesheet" href={styles} />}
         <title>Cards</title>
       </head>
       <body>
