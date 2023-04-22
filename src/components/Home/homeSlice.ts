@@ -51,9 +51,6 @@ const homeSlice = createSlice({
     setValue: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
-    setCards: (state, action: PayloadAction<IResponce>) => {
-      state.cards = action.payload.results;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -97,4 +94,4 @@ const homeSlice = createSlice({
 const { actions, reducer } = homeSlice;
 
 export default reducer;
-export const { setValue, setCards } = actions;
+export const { setValue } = actions;
