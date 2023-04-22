@@ -5,20 +5,18 @@ const Page = ({ preloadedState, children }: IPage) => {
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
-        {import.meta.env.DEV && (
-          <script
-            type="module"
-            dangerouslySetInnerHTML={{
-              __html: `
+        <script
+          type="module"
+          dangerouslySetInnerHTML={{
+            __html: `
                 import RefreshRuntime from '/@react-refresh';
                 RefreshRuntime.injectIntoGlobalHook(window);
                 window.$RefreshReg$ = () => {};
                 window.$RefreshSig$ = () => (type) => type;
                 window.__vite_plugin_react_preamble_installed__ = true;
                 `,
-            }}
-          />
-        )}
+          }}
+        />
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link

@@ -15,7 +15,7 @@ const App: FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
-        <Route path="form" element={<FormData />}></Route>
+        <Route path="form" element={<FormData />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

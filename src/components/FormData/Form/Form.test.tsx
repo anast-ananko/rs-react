@@ -5,8 +5,10 @@ import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 import * as actions from '../formSlice';
 
-import store from '../../../store';
 import Form from '.';
+import createStore from '../../../store';
+
+const store = createStore();
 
 describe('Form', () => {
   it('should show error messages for invalid data', async () => {

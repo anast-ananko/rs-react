@@ -4,8 +4,10 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { Provider } from 'react-redux';
 
-import store from '../../store';
 import Home from '.';
+import createStore from '../../store';
+
+const store = createStore();
 
 describe('Home', () => {
   const server = setupServer(

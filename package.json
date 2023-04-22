@@ -9,7 +9,7 @@
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"

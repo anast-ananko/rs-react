@@ -4,8 +4,10 @@ import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 
 import { useAppSelector } from '../../../hook';
-import store from '../../../store';
 import FormCardsList from '.';
+import createStore from '../../../store';
+
+const store = createStore();
 
 vi.mock('../../../hook');
 
