@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 
 import { useAppDispatch, useAppSelector } from '../../hook';
 import noImage from '../../assets/No_Image_Available.jpg';
@@ -21,9 +20,9 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCardId]);
 
-  return createPortal(
+  return (
     <>
-      {showModal && typeof window !== 'undefined' && (
+      {showModal && (
         <div className={`modal${showModal ? ' show' : ''}`} onClick={onClose}>
           <div className="modal__content" data-testid="modal" onClick={(e) => e.stopPropagation()}>
             <i className="fa-solid fa-x" onClick={onClose} data-testid="close"></i>
@@ -63,8 +62,7 @@ const Modal: FC<IModal> = ({ onClose, showModal, activeCardId }) => {
           </div>
         </div>
       )}
-    </>,
-    document.body
+    </>
   );
 };
 
