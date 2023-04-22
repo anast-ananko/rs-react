@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import App from './App';
 import createStore from './store';
 import Page from './Page';
+import { fetchAllCards } from './components/Home/homeSlice';
 
-export function render(url: string, opts: RenderToPipeableStreamOptions) {
+export async function render(url: string, opts: RenderToPipeableStreamOptions) {
   const store = createStore();
+  await store.dispatch(fetchAllCards());
   const preloadedState = store.getState();
 
   const stream = renderToPipeableStream(

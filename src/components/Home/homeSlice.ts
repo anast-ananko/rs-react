@@ -4,7 +4,6 @@ import usefetch from '../../hooks/fetch';
 import { IHomeState } from '../../interfaces/homeState';
 import { IModalCard } from '../../interfaces/modalCard';
 import { IResponce } from '../../interfaces/responce';
-// import { ISearchCard } from '../../interfaces/searchCard';
 
 const initialState: IHomeState = {
   cards: [],
