@@ -1,24 +1,24 @@
 import { validateCheckbox, validateRadio } from './validationFunctions';
 
 describe('validateCheckbox', () => {
-  test('returns error message when gift is not selected', () => {
+  it('returns error message when gift is not selected', () => {
     const result = validateCheckbox([]);
     expect(result).toBe('Gift is required');
   });
 
-  test('returns true when gift is selected', () => {
+  it('returns true when gift is selected', () => {
     const result = validateCheckbox(['postcard']);
     expect(result).toBe(true);
   });
 });
 
 describe('validateRadio', () => {
-  test('returns error message when size is not selected', () => {
+  it('returns error message when size is not selected', () => {
     const result = validateRadio('');
     expect(result).toBe('Size is required');
   });
 
-  test('returns true when size is selected', () => {
+  it('returns true when size is selected', () => {
     const result = validateRadio('small');
     expect(result).toBe(true);
   });

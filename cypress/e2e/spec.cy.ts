@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import 'cypress-file-upload';
 
 describe('The Home Page', () => {
   it('successfully loads', () => {
@@ -53,11 +54,48 @@ describe('The Form Page', () => {
     cy.get('#color').select('red').should('have.value', 'red');
     cy.get('#small').check('small').should('have.value', 'small');
     cy.get('#postcard').check('postcard');
-    cy.fixture('example.jpg').then((fileContent) => {
-      cy.get('#file').trigger('change', {
-        target: { files: [new File([fileContent], 'example.jpg')] },
-      });
-    });
+    cy.get('#file').attachFile('example.jpg');
+  });
+
+  it('clear all fields after submit', function () {
+    cy.visit('/form');
+    cy.get('#title').type('Oliver').should('have.value', 'Oliver');
+    cy.get('#date').type('2023-04-22').should('have.value', '2023-04-22');
+    cy.get('#color').select('Red').should('have.value', 'red');
+    cy.get('#small').check('small').should('have.value', 'small');
+    cy.get('#postcard').check('postcard');
+    cy.get('#file').attachFile('example.jpg');
+
+    cy.get('.form__button').click();
+
+    cy.get('#title').should('have.value', '');
+    cy.get('#date').should('have.value', '');
+    cy.get('#color').should('have.value', '');
+    cy.get('#small').should('not.be.checked');
+    cy.get('#medium').should('not.be.checked');
+    cy.get('#big').should('not.be.checked');
+    cy.get('#postcard').should('not.be.checked');
+    cy.get('#trinket').should('not.be.checked');
+    cy.get('#file').should('have.value', '');
+  });
+
+  it('show mistakes when gift, size and image are not selected', function () {
+    cy.visit('/form');
+    cy.get('#title').type('Oliver').should('have.value', 'Oliver');
+    cy.get('#date').type('2023-04-22').should('have.value', '2023-04-22');
+    cy.get('#color').select('red').should('have.value', 'red');
+    cy.get('.form__button').click();
+    cy.get('p.error').contains('Size is required').should('be.visible');
+    cy.get('p.error').contains('Gift is required').should('be.visible');
+    cy.get('p.error').contains('Image is required').should('be.visible');
+  });
+});
+
+describe('The Not found Page', () => {
+  it('successfully loads', () => {
+    cy.visit('/wrong');
+    cy.url().should('include', '/wrong');
+    cy.get('.not-found__title').contains('Not found');
   });
 
   it('Just a test to remove page load on coverage saving', () => {
