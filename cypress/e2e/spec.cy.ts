@@ -16,6 +16,7 @@ describe('The Home Page', () => {
     cy.visit('/');
     cy.get('[data-testid="card"]:first-child').click();
     cy.get('.modal').should('exist');
+    cy.get('.modal__text').should('exist');
   });
 });
 
@@ -88,6 +89,20 @@ describe('The Form Page', () => {
     cy.get('p.error').contains('Size is required').should('be.visible');
     cy.get('p.error').contains('Gift is required').should('be.visible');
     cy.get('p.error').contains('Image is required').should('be.visible');
+  });
+
+  it('show mistakes when title does not start with uppercase letter', function () {
+    cy.visit('/form');
+    cy.get('#title').type('oliver').should('have.value', 'oliver');
+    cy.get('.form__button').click();
+    cy.get('p.error').contains('First letter must be uppercase').should('be.visible');
+  });
+
+  it('show mistakes when data is greater then current', function () {
+    cy.visit('/form');
+    cy.get('#date').type('2023-05-22').should('have.value', '2023-05-22');
+    cy.get('.form__button').click();
+    cy.get('p.error').contains('Date cannot be greater than current').should('be.visible');
   });
 });
 
