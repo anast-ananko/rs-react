@@ -9,7 +9,9 @@ import { afterEach, vi } from 'vitest';
 import Modal from '.';
 import useFetch from '../../hooks/fetch';
 import { IModalCard } from '../../interfaces/modalCard';
-import store from '../../store';
+import createStore from '../../store';
+
+const store = createStore();
 
 vi.mock('../../../hook');
 

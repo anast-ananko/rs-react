@@ -3,8 +3,10 @@ import { fireEvent, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 
-import store from '../../store';
 import SearchBar from '.';
+import createStore from '../../store';
+
+const store = createStore();
 
 vi.mock('../../../hook');
 

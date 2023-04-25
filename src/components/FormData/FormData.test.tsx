@@ -2,8 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import store from '../../store';
 import FormData from '.';
+import createStore from '../../store';
+
+const store = createStore();
 
 describe('FormData', () => {
   it('should render the component with the title, form and cards list', () => {

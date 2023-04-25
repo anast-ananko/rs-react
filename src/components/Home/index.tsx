@@ -18,10 +18,12 @@ const Home: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (query) {
-      dispatch(fetchCardsWithQuery(query));
-    } else {
-      dispatch(fetchAllCards());
+    if (!cards) {
+      if (query) {
+        dispatch(fetchCardsWithQuery(query));
+      } else {
+        dispatch(fetchAllCards());
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
