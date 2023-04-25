@@ -14,9 +14,9 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "cypress": "cypress run --e2e",
-    "cypress:open": "cypress open",
-    "report": "npx nyc report && npx nyc report --reporter=text-summary",
-    "cypress:coverage": "cypress run --env coverage=true"
+    "cypress:open": "cypress open",    
+    "cypress:coverage": "cypress run --env coverage=true",
+    "report": "npx nyc report && npx nyc report --reporter=text-summary"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",

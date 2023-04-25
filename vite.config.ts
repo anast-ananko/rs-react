@@ -23,4 +23,7 @@ export default defineConfig({
     },
   },
   ssr: { noExternal: ['@reduxjs/toolkit'] },
+  build: {
+    sourcemap: true,
+  },
 });
